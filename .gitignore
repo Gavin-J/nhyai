@@ -61,3 +61,4 @@ backend/api/handwrite/darknet/obj/*
 backend/api/handwrite/darknet/darknet
 backend/api/handwrite/darknet/libdarknet.so
 backend/api/handwrite/darknet/libdarknet.a
+backend/api/handwrite/darknet/build/*

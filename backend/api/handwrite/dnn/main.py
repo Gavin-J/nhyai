@@ -77,6 +77,8 @@ def text_ocr(img,scale,maxScale,TEXT_LINE_SCORE):
                     result.append(text)
         result = sorted(result,key=lambda x:sum(x['box'][1::2]))
     except:
-        result = '不支持的文件内容'
+        result = [{
+            "text": '不支持的文件内容'
+        }]
     return result
 
