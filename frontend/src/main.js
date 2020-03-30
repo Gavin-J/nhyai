@@ -6,7 +6,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment'
 
 
-
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad, {
+    preLoad: 1.3,
+    error: require('../src/assets/image/prelook_image.png'),
+    loading: require('../src/assets/image/prelook_image.png'),
+    attempt: 3
+})
 import App from './App'
 import router from './store/router'
 import common from './store/common'

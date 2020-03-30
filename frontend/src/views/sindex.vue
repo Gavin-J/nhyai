@@ -145,6 +145,7 @@
 				<el-dialog
 					:visible.sync="centerDialogVisible"
 					width="920px"
+					@close="closeDialog"
 					center>
 					<div class="show_video_outer" v-show="preLookInfo.channel_id !==4">
 						<div class="image_con" v-show="fileSort ==1">
@@ -730,7 +731,11 @@
             handleCurrentChange(val) {
                 this.getHistory(val);
             },
+            closeDialog(){
+                this.preLookInfo={};
+			},
             preLook(item){
+
                 this.preLookInfo = item;
 				this.getRespectInfo(item.id);
                 this.fileSort =item.file_type;
@@ -741,8 +746,7 @@
 				}
                 console.log(this.preLookInfo);
 				console.log(this.markerInfo);
-				this.centerDialogVisible = true;
-
+                this.centerDialogVisible = true;
 			},
             initVideo(item){
                 console.log(item);
