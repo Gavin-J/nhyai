@@ -10,9 +10,9 @@ import numpy as np
 import sys
 sys.path.append(os.path.join(os.getcwd(),"backend","api","handwrite"))
 from dnn.main import text_ocr
-from hwconfig import scale,maxScale,TEXT_LINE_SCORE
+from hwconfig import scale,maxScale,TEXT_LINE_SCORE,adjust
 from ocr.config import AngleModelPb,AngleModelPbtxt
-from PIL import Image
+from PIL import Image,ExifTags
 
 class HandWrite:
     """手写体识别"""
@@ -44,18 +44,38 @@ class HandWrite:
         return ROTATE[index]
 
     def getWord(self, img_file):
-        img = cv2.imread(img_file)##GBR
+        ##基于exif信息文字朝向检测
+        img_exif = Image.open(img_file)
+        img = cv2.imread(img_file)
+        is_exif = False
+        try:
+            for orientation in ExifTags.TAGS.keys() : 
+                if ExifTags.TAGS[orientation]=='Orientation' : break 
+            exif = dict(img_exif._getexif().items())
+            if  exif[orientation] == 3 :
+                img = Image.fromarray(img).transpose(Image.ROTATE_180)
+                is_exif = True
+            elif exif[orientation] == 8 : 
+                img = Image.fromarray(img).transpose(Image.ROTATE_270)
+                is_exif = True
+            elif exif[orientation] == 6 : 
+                img = Image.fromarray(img).transpose(Image.ROTATE_90)
+                is_exif = True
+        except:
+            pass
+        
         # print (img_file)
         # print (img)
         if img is not None:
-            ##文字朝向检测
-            angle = self.angle_detect_dnn(img=np.copy(img))
-            if angle==90:
-                img = Image.fromarray(img).transpose(Image.ROTATE_90)
-            elif angle==180:
-                img = Image.fromarray(img).transpose(Image.ROTATE_180)
-            elif angle==270:
-                img = Image.fromarray(img).transpose(Image.ROTATE_270)
+            ##基于tensorflow文字朝向检测
+            if adjust and is_exif is False:
+                angle = self.angle_detect_dnn(img=np.copy(img))
+                if angle==90:
+                    img = Image.fromarray(img).transpose(Image.ROTATE_270)
+                elif angle==180:
+                    img = Image.fromarray(img).transpose(Image.ROTATE_180)
+                elif angle==270:
+                    img = Image.fromarray(img).transpose(Image.ROTATE_90)
 
             image = np.array(img)
             image =  cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
