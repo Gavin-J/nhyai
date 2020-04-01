@@ -86,6 +86,7 @@
                         this.isLoading = false;
                         console.log(response);
                         this.showJson = response.data.handwritten_content;
+                        $('#myCanvas').css('display','inline-block');
                         this.plotBox(response.data.box,response.image)
 
                     },
@@ -98,8 +99,8 @@
                 e.preventDefault();
             },
             plotBox(boxes,src){
-                canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"))
                 this.isResult = true;
+                canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"))
             },
             changeImage(e){
                 this.imageIsBig = false;
@@ -118,6 +119,7 @@
                 }else {
                     this.imageRight = true;
                     this.isResult = false;
+                    $('#myCanvas').css('display','none');
                     this.uploadImage(e);
                 }
             },
