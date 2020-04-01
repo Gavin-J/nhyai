@@ -335,7 +335,7 @@ class CarPlateIdentity:
             cloneImg,contours,heriachy = cv2.findContours(pred_image,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
         
         # print (len(contours))
-
+        box = []
         for i,contour in enumerate(contours):
             cv2.drawContours(temp1_orig_img, contours, i, (0, 255, 255))
             # 获取轮廓最小外接矩形，返回值rotate_rect
@@ -366,7 +366,11 @@ class CarPlateIdentity:
 
         # cv2.imshow('temp1_orig_img', temp1_orig_img)
 
-        return carPlate_list
+        # 把二维数组降低到一维
+        if len(box) > 0:
+            box =  np.ravel(box)
+
+        return carPlate_list, box
 
     # 获取车牌每列边缘像素点个数
     def getColSum(self, img,col):
@@ -572,7 +576,7 @@ class CarPlateIdentity:
         pred_img = self.pre_process(img)
 
         # 车牌定位
-        car_plate_list = self.locate_carPlate(img,pred_img)
+        car_plate_list,box  = self.locate_carPlate(img,pred_img)
 
         # CNN车牌过滤
         ret,car_plate = self.cnn_select_carPlate(car_plate_list)
@@ -594,7 +598,7 @@ class CarPlateIdentity:
         # print(car_num)
 
         # cv2.waitKey(0)
-        return ret, car_num
+        return ret, car_num,box
 
 if __name__ == '__main__':
     isgpu = True
