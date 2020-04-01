@@ -1511,13 +1511,17 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         # print (check_result)
         arr = check_result['data']
         dataArr = []
+        dataBox = []
         dataMap = {}
         dataMap["handwritten_content"] = ""
+        dataMap["box"] = ""
         for each in arr:
             if len(arr) >= 0:
                 dataArr.append(each["text"])
+                dataBox.append(each["box"])
 
         dataMap["handwritten_content"] = dataArr
+        dataMap["box"] = dataBox
 
         # result = check_result
         serializer.save(data=dataMap, ret=ret, msg=msg,
