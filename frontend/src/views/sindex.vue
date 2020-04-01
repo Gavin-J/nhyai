@@ -149,7 +149,12 @@
 					center>
 					<div class="show_video_outer" v-show="preLookInfo.channel_id !==4">
 						<div class="image_con" v-show="fileSort ==1">
-							<img :src="preLookInfo.file_url">
+							<el-image
+								style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
+								:src="preLookInfo.file_url"
+								:preview-src-list="srcList">
+							</el-image>
+							<!--<img :src="preLookInfo.file_url">-->
 							<span></span>
 						</div>
 						<div class="image_con" v-show="fileSort ==3">
@@ -416,6 +421,7 @@
                 player:null,
                 fileSort:2,
 				firstVideo:true,
+                srcList:[],
                 pickerOptions: {
                     disabledDate(time) {
                         return time.getTime() > Date.now();
@@ -735,10 +741,11 @@
                 this.preLookInfo={};
 			},
             preLook(item){
-
+                this.srcList = [];
                 this.preLookInfo = item;
 				this.getRespectInfo(item.id);
                 this.fileSort =item.file_type;
+                this.srcList.push(item.file_url);
                 if(this.preLookInfo.file_type ==4){
                     setTimeout(()=>{
                         document.getElementById('web_text').innerHTML = this.preLookInfo.web_text;
@@ -862,16 +869,16 @@
 	.green_color{color: #54cd62;}
 
 	/*预览begin*/
-	.show_video_outer{height: 400px;}
+	.show_video_outer{height: 440px;}
 	.image_con{height:440px;position: relative;overflow: hidden;text-align: center;vertical-align: middle;}
-	.image_con img{max-height: 400px;max-width:100%;object-fit: cover;vertical-align: middle;}
+	.image_con img{max-height: 440px;max-width:100%;object-fit: cover;vertical-align: middle;}
 	.image_con span{display: inline-block;vertical-align: middle;height: 100%;width: 0;}
 	.image_con #Video{width: 100%;height: 400px;}
 	.image_con audio{width: 420px;margin-top: 150px;}
 	.image_con p{font-size: 16px;margin-top: 15px;padding-right: 100px;}
 
 
-	.pre_result_con{padding: 30px 30px 40px;}
+	.pre_result_con{padding: 2px 30px 40px;}
 	.pre_result_con td{border: 1px solid #e3e8f3;height: 46px;}
 	.pre_item{width: 100%;}
 	.pre_item td:last-child{padding: 20px;text-align: justify}

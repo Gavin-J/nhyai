@@ -134,3 +134,11 @@
 .el-carousel__item--card.is-active img{
     opacity: 1!important;
 }
+.el-image__error, .el-image__inner, .el-image__placeholder {
+    max-height: 400px;
+    max-width: 100%;
+    object-fit: contain;
+}
+.el-image-viewer__close {
+    color: #fff;
+}

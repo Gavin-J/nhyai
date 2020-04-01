@@ -3,9 +3,11 @@
 		<el-row class="loading_con">
 			<el-col :xs={span:24} :sm={span:11,offset:1} :md={span:10,offset:2} :lg={span:9,offset:3} :xl={span:8,offset:4}>
 				<div class="image_outer">
+					<span class="original_style">原始图片</span>
 					<div class="outer_add" v-loading="isLoading">
-						<span class="original_style">原始图片</span>
-						<img class="show_add_image" :src="dialogImageUrl">
+
+						<img class="show_add_image" :src="dialogImageUrl" id="img" v-show="!isResult">
+						<canvas id="myCanvas" class="show_add_image"></canvas>
 					</div>
 					<div class="upload_outer">
 						<div class="local_upload" v-if="!isLoading">
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+	import {canvasBox} from '../../store/common'
     export default {
         data() {
             return {
@@ -55,8 +58,8 @@
                 options:{background:"rgba(0, 0, 0, 0.3)",fullscreen:false,target:document.querySelector(".outer_add")},
                 currentImage:1,
                 isLoading:false,
-				clickFirst:0
-
+				clickFirst:0,
+                isResult:false
             };
         },
         mounted:function () {
@@ -83,6 +86,8 @@
                         this.isLoading = false;
                         console.log(response);
                         this.showJson = response.data.handwritten_content;
+                        this.plotBox(response.data.box,response.image)
+
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');
@@ -92,10 +97,15 @@
                 });
                 e.preventDefault();
             },
+            plotBox(boxes,src){
+                canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"))
+                this.isResult = true;
+            },
             changeImage(e){
                 this.imageIsBig = false;
                 this.imageRight = false;
                 const file = e.target.files[0];
+                console.log(file)
                 const reader = new FileReader();
                 const that = this;
                 reader.readAsDataURL(file);
@@ -107,6 +117,7 @@
                     this.$message.error('请上传小于20M的图片！');
                 }else {
                     this.imageRight = true;
+                    this.isResult = false;
                     this.uploadImage(e);
                 }
             },
@@ -134,10 +145,11 @@
 
 <style scoped>
 	.show_json_outer{height: 350px;overflow-y:scroll;border: 1px solid #e2ecfc;}
-	.original_style{position: absolute;font-size: 14px;color: #316dff;height: 30px;line-height: 30px;background-color: #e3ecfb;display: inline-block;padding: 0 35px 0 25px;-webkit-clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%);}
+	.original_style{position: absolute;font-size: 14px;color: #316dff;height: 30px;line-height: 30px;background-color: #e3ecfb;display: inline-block;
+		padding: 0 35px 0 25px;-webkit-clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%);z-index: 1;}
 	.image_outer{margin-right: 10px;}
 	.show_add_image{max-height: 100%;max-width: 100%;vertical-align: middle;}
-	.outer_add{height:350px;overflow: hidden;border: 1px solid #e2ecfc;vertical-align: middle;text-align: center;line-height: 350px;}
+	.outer_add{position:relative; height:350px;overflow: hidden;border: 1px solid #e2ecfc;vertical-align: middle;text-align: center;line-height: 350px;}
 	.upload_outer{display: flex;margin-top: 20px;}
 	.top_suggest{color: #999999;font-size: 14px;line-height: 40px;height: 30px;}
 	.init_url_style{flex: 1;height: 43px;line-height: 43px;border: 1px solid #E2ECFC;font-size: 15px;padding-left: 10px;background-color: #fafcfe;}

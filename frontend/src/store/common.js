@@ -9,9 +9,9 @@ export default {
         // Vue.prototype.api = "http://220.174.232.142:9016";	//测试环境
 
 		// Vue.prototype.api = "http://www.ischoolhn.com";	//试运行环境
-		// Vue.prototype.api = "http://172.31.4.31:8000";	//卫俊
+		Vue.prototype.api = "http://172.31.4.31:8000";	//卫俊
 		// Vue.prototype.api = "http://172.31.20.59:8000";	//卫俊
-		Vue.prototype.api = "https://ai.hn-ssc.com";	//卫俊
+		// Vue.prototype.api = "https://ai.hn-ssc.com";	//卫俊
 
 		//Vue.prototype.api = "http://www.hn-ssc.com";	//正式环境
         // Vue.prototype.api = "";	//打包环境
@@ -83,6 +83,39 @@ export function showMessageShort(msg) {
         type: 'error',
         duration:1500
     });
+};
+export function canvasBox(boxes,src,image,canvas) {
+    var W = image.naturalWidth;
+    var H = image.naturalHeight;
+    var c = canvas;
+    var ctx = c.getContext("2d");
+    var img = new Image();
+    img.src =src;
+    img.onload = ()=> {
+        c.height = H;
+        c.width = W;
+        ctx.strokeStyle = "blue";
+        ctx.drawImage(img, 0, 0);
+        //图片加载完之后再画矩形
+        //我这里用的是rect方法，这里可以替换成你写的mveto和lineto的方法
+        for(var i=0;i<boxes.length;i++){
+            var x1 = parseInt(boxes[i][0]);
+            var y1 = parseInt(boxes[i][1]);
+            var x2 = parseInt(boxes[i][2]);
+            var y2 = parseInt(boxes[i][3]);
+            var x3 = parseInt(boxes[i][4]);
+            var y3 = parseInt(boxes[i][5]);
+            var x4 = parseInt(boxes[i][6]);
+            var y4 = parseInt(boxes[i][7]);
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x3, y3);
+            ctx.lineTo(x4, y4);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+            ctx.closePath();
+        }
+    }
 };
 
 export function formatDate(date, fmt) {//2018-03-21 18:08:48

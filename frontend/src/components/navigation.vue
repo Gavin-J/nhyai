@@ -97,8 +97,8 @@
 	#navigation{height:60px;position:absolute;top:0;width: 100%;z-index: 99;background-color: transparent;min-width: 1300px;}
 	#navigation :hover{background-color: #060606;}
 	#navigation :hover .header_nav span{color: #fff;}
-	/*#navigation :hover .header_logo img{!*display: inline-block;width: 133px;height: 58px;*!}*/
-	/*#navigation :hover .header_logo img{content: url("../assets/image/nhy-logo_white.png")}*/
+	/*#navigation :hover .header_logo img{display: inline-block;width: 133px;height: 58px;}
+	#navigation :hover .header_logo img{content: url("../assets/image/nhy-logo_white.png")}*/
 
 	/*头部样式*/
 	.header_con{ min-width:800px; /*height:110px;position:absolute;top:0;left:50%;margin-left:-640px;z-index:99;*/}
