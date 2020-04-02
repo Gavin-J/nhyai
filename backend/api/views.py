@@ -1566,7 +1566,7 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         # arr = check_result['res']
         # carPlateIdentity = CarPlateIdentity()
         # ret, car_num = carPlateIdentity.car_plate_identity(file_path)
-        ret, car_num = settings.CARPLATEIDENTITY.car_plate_identity(file_path)
+        ret, car_num,box = settings.CARPLATEIDENTITY.car_plate_identity(file_path)
         dataMap = {}
         check_result = {}
         # count = 0
@@ -1577,6 +1577,7 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
             check_result['text'] = "请上传车牌图片"
         else:
             dataMap['plate_no'] = car_num
+            dataMap['box'] = box
             check_result['text'] = car_num
 
         # dataMap["plate_no"] = ""
