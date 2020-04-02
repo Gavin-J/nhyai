@@ -88,6 +88,7 @@ class OCR:
                               }
                        } for i,x in enumerate(result)]
                 res = adjust_box_to_origin(img,angle, res)##修正box
+                com_res = res
 
             elif billModel=='身份证':
 
