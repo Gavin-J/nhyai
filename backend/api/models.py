@@ -137,6 +137,7 @@ class OcrGeneral(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=255, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class OcrIDCard(models.Model):
@@ -150,6 +151,7 @@ class OcrIDCard(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class VideoFileUpload(models.Model):
@@ -225,6 +227,7 @@ class OcrDrivinglicense(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class OcrVehiclelicense(models.Model):
@@ -238,6 +241,7 @@ class OcrVehiclelicense(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class OcrBusinesslicense(models.Model):
@@ -251,6 +255,7 @@ class OcrBusinesslicense(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class OcrBankcard(models.Model):
@@ -264,6 +269,7 @@ class OcrBankcard(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class OcrHandWritten(models.Model):
@@ -303,6 +309,7 @@ class OcrBusinessCard(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
 
 
 class SensitivityType(models.Model):

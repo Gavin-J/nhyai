@@ -65,14 +65,15 @@ class OcrGeneralSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrGeneral
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class OcrIDCardSerializer(serializers.HyperlinkedModelSerializer):
@@ -81,14 +82,15 @@ class OcrIDCardSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrIDCard
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class FileImageTerrorismUploadSerializer(serializers.HyperlinkedModelSerializer):
@@ -193,14 +195,15 @@ class OcrDrivinglicenseSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrDrivinglicense
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class OcrVehiclelicenseSerializer(serializers.HyperlinkedModelSerializer):
@@ -209,14 +212,15 @@ class OcrVehiclelicenseSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrVehiclelicense
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class OcrBusinesslicenseSerializer(serializers.HyperlinkedModelSerializer):
@@ -225,14 +229,15 @@ class OcrBusinesslicenseSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrBusinesslicense
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class OcrBankcardSerializer(serializers.HyperlinkedModelSerializer):
@@ -241,14 +246,15 @@ class OcrBankcardSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrHandWritten
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class OcrHandWrittenSerializer(serializers.HyperlinkedModelSerializer):
@@ -288,14 +294,15 @@ class OcrBusinessCardSerializer(serializers.HyperlinkedModelSerializer):
     ret = serializers.JSONField(True)
     msg = serializers.JSONField(True)
     data = serializers.JSONField(True)
+    box = serializers.JSONField(True)
 
     class Meta:
         model = OcrBusinessCard
         fields = ('image', 'image_url', 'system_id',
-                  'channel_id', 'user_id', 'ret', 'msg', 'data')
+                  'channel_id', 'user_id', 'ret', 'msg', 'data', 'box')
 
     def clean_json(self, obj):
-        return obj.ret, obj.msg, obj.data
+        return obj.ret, obj.msg, obj.data, obj.box
 
 
 class HistoryRecordSerializer(serializers.HyperlinkedModelSerializer):
