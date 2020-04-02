@@ -46,21 +46,27 @@
             return {
                 dialogImageUrl: require("../../assets/image/hand_writer_sample.png"),
                 dialogVisible: false,//
-                jsonDemo:'["人生就像一盒巧克力","你永远都不知道下一块会是什么味道","Liffe was like a box of chocalates.You never know","what you\'re going to get.","《阿甘正传》"]',
-                buttonWord:"开始检测",
-                imageName:"",
-                showPercent:"概率：1.75%",
-                isForce:false,
-                imageRight:false,
-                imageIsBig:false,
+                jsonDemo: '["人生就像一盒巧克力","你永远都不知道下一块会是什么味道","Liffe was like a box of chocalates.You never know","what you\'re going to get.","《阿甘正传》"]',
+                buttonWord: "开始检测",
+                imageName: "",
+                showPercent: "概率：1.75%",
+                isForce: false,
+                imageRight: false,
+                imageIsBig: false,
                 activeName: 'first',
-                showJson :{},
-                options:{background:"rgba(0, 0, 0, 0.3)",fullscreen:false,target:document.querySelector(".outer_add")},
-                currentImage:1,
-                isLoading:false,
-				clickFirst:0,
-                isResult:false
-            };
+                showJson: {},
+                options: {
+                    background: "rgba(0, 0, 0, 0.3)",
+                    fullscreen: false,
+                    target: document.querySelector(".outer_add")
+                },
+                currentImage: 1,
+                isLoading: false,
+                clickFirst: 0,
+                isResult: false,
+                currentBox: [[80, 128, 454, 104, 457, 152, 84, 176], [152, 170, 738, 125, 742, 176, 155, 221], [68, 239, 724, 197, 726, 231, 70, 272],
+                    [51, 307, 454, 257, 458, 290, 56, 340], [449, 320, 696, 294, 700, 335, 454, 360]]
+            }
         },
         mounted:function () {
             this.loadDate();
@@ -83,12 +89,10 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        this.isLoading = false;
                         console.log(response);
                         this.showJson = response.data.handwritten_content;
                         $('#myCanvas').css('display','inline-block');
                         this.plotBox(response.data.box,response.image)
-
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');
@@ -99,8 +103,10 @@
                 e.preventDefault();
             },
             plotBox(boxes,src){
-                this.isResult = true;
-                canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"))
+                canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"),()=>{
+                    this.isResult = true;
+                    this.isLoading = false;
+				});
             },
             changeImage(e){
                 this.imageIsBig = false;
@@ -120,8 +126,14 @@
                     this.imageRight = true;
                     this.isResult = false;
                     $('#myCanvas').css('display','none');
+                    this.clearCanvas();
                     this.uploadImage(e);
                 }
+            },
+			clearCanvas(){
+                var c=document.getElementById("myCanvas");
+                var cxt=c.getContext("2d");
+                c.height=c.height;
             },
             loadDate() {
                 this.isLoading = true;
@@ -134,7 +146,7 @@
                     var intervalid1 = setTimeout(() => {
                         this.showJson = JSON.parse(this.jsonDemo);
                         clearInterval(intervalid1);
-                        this.isLoading = false;
+                        this.plotBox(this.currentBox,this.dialogImageUrl);
                         $(".show_sm_image").attr("disabled",false).css("pointer-events","auto");
                         this.clickFirst = 0;
                     }, 4000)

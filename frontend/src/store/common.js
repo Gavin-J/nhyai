@@ -84,7 +84,7 @@ export function showMessageShort(msg) {
         duration:1500
     });
 };
-export function canvasBox(boxes,src,image,canvas) {
+export function canvasBox(boxes,src,image,canvas,callback) {
     var W = image.naturalWidth;
     var H = image.naturalHeight;
     var c = canvas;
@@ -115,6 +115,7 @@ export function canvasBox(boxes,src,image,canvas) {
             ctx.stroke();
             ctx.closePath();
         }
+        callback();
     }
 };
 
