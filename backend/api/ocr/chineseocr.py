@@ -88,6 +88,7 @@ class OCR:
                               }
                        } for i,x in enumerate(result)]
                 res = adjust_box_to_origin(img,angle, res)##修正box
+                com_res = res
 
             elif billModel=='身份证':
 
@@ -95,6 +96,17 @@ class OCR:
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(img,angle, com_res)##修正box
             
             elif billModel=='驾驶证':
 
@@ -102,6 +114,17 @@ class OCR:
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(img,angle, com_res)##修正box
 
             elif billModel=='行驶证':
 
@@ -109,6 +132,17 @@ class OCR:
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(img,angle, com_res)##修正box
 
             elif billModel=='营业执照':
 
@@ -116,12 +150,34 @@ class OCR:
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(img,angle, com_res)##修正box
         
             elif billModel=='银行卡':
                 res = bankcard.bankcard(result)
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(img,angle, com_res)##修正box
 
             elif billModel=='手写体':
                 result = union_rbox(result,0.2)
@@ -149,11 +205,22 @@ class OCR:
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(img,angle, com_res)##修正box
             
         
         timeTake = time.time()-timeTake
             
-        return {'res':res,'timeTake':round(timeTake,4), 'text':text}
+        return {'res':res,'timeTake':round(timeTake,4), 'text':text, 'com_res': com_res}
 
 if __name__ == '__main__':
     ocrTest = OCR()
