@@ -260,7 +260,10 @@
 								<td v-else-if="preLookInfo.channel_id==4" id="web_text"></td>
 								<td v-else-if="preLookInfo.channel_id==5">姓名：{{videoUrl.name|noCheck}}<br/>性别：{{videoUrl.sex|noCheck}}<br/>
 									民族：{{videoUrl.nation|noCheck}}<br/>出生：{{videoUrl.birth|formatDate('yyyy年MM月dd日')}}<br/>地址：{{videoUrl.address|noCheck}}<br/>公民身份号码：{{videoUrl.id|noCheck}}</td>
-								<td v-else-if="preLookInfo.channel_id==8"><span v-for="item in videoUrl" >{{item}}<br/></span></td>
+								<td v-else-if="preLookInfo.channel_id==8">
+									<span v-for="item in videoUrl" v-if="videoUrl.length>0">{{item}}<br/></span>
+									<span v-else>未识别到内容</span>
+								</td>
 								<td v-else-if="preLookInfo.channel_id==6">
 									<span>{{runningTitle.license_type}}：{{videoUrl.license_type}}<br/></span>
 									<span>{{runningTitle.plate_no}}：{{videoUrl.plate_no}}<br/></span>
@@ -322,7 +325,7 @@
 								</td>
 								<td v-else-if="preLookInfo.channel_id==11">
 									<div v-if="videoUrl">
-										<span v-for="item in videoUrl">{{item}}<br/></span>
+										<span v-for="item in videoUrl.handwritten_content">{{item}}<br/></span>
 									</div>
 									<div v-else>
 										<span>未识别到内容！</span>

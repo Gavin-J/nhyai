@@ -95,28 +95,40 @@ export function canvasBox(boxes,src,image,canvas,callback) {
         c.height = H;
         c.width = W;
         ctx.strokeStyle = "blue";
+        ctx.lineWidth =1;
         ctx.drawImage(img, 0, 0);
+        ctx.beginPath();
         //图片加载完之后再画矩形
         //我这里用的是rect方法，这里可以替换成你写的mveto和lineto的方法
         for(var i=0;i<boxes.length;i++){
-            var x1 = parseInt(boxes[i][0]);
-            var y1 = parseInt(boxes[i][1]);
-            var x2 = parseInt(boxes[i][2]);
-            var y2 = parseInt(boxes[i][3]);
-            var x3 = parseInt(boxes[i][4]);
-            var y3 = parseInt(boxes[i][5]);
-            var x4 = parseInt(boxes[i][6]);
-            var y4 = parseInt(boxes[i][7]);
+            var x1 = parseInt(boxes[i][0])-0.5;
+            var y1 = parseInt(boxes[i][1])-0.5;
+            var x2 = parseInt(boxes[i][2])-0.5;
+            var y2 = parseInt(boxes[i][3])-0.5;
+            var x3 = parseInt(boxes[i][4])-2;
+            var y3 = parseInt(boxes[i][5])-2;
+            var x4 = parseInt(boxes[i][6])-0.5;
+            var y4 = parseInt(boxes[i][7])-0.5;
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.lineTo(x3, y3);
             ctx.lineTo(x4, y4);
             ctx.lineTo(x1, y1);
-            ctx.stroke();
-            ctx.closePath();
+            // ctx.moveTo(x1, y1);
+            // ctx.lineTo(x2, y2);
+            // ctx.lineTo(x3, y3);
+            // ctx.lineTo(x4, y4);
+            // ctx.lineTo(x1, y1);
         }
+        ctx.stroke();
+        ctx.closePath();
         callback();
     }
+};
+export function clearCanvas(canvas){
+    var c=document.getElementById("myCanvas");
+    var cxt=c.getContext("2d");
+    c.height=c.height;
 };
 
 export function formatDate(date, fmt) {//2018-03-21 18:08:48

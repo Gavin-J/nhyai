@@ -5,7 +5,8 @@
 				<div class="image_outer">
 					<div class="outer_add">
 						<span class="original_style original_title_style">原始图片</span>
-						<img class="show_add_image" :src="dialogImageUrl">
+						<img class="show_add_image" :src="dialogImageUrl" id="img" v-show="!isResult">
+						<canvas id="myCanvas" class="show_add_image"></canvas>
 					</div>
 					<div class="upload_outer">
 						<div class="local_upload" v-if="!isCheck">
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+    import {canvasBox,clearCanvas} from '../../store/common'
     export default {
         data() {
             return {
@@ -52,7 +54,9 @@
                 activeName: 'first',
                 showJson :{},
                 options:{fullscreen:false,target:document.querySelector(".outer_add")},
-				isCheck:false
+				isCheck:false,
+                isResult: false,
+                currentBox: [[296.1687175081781,82.0341836846865,491.09910474147654,82.96645675430968,490.8312824918219,138.9658163153135,295.90089525852346,138.03354324569034],[308.1,159.0,489.9,159.0,489.9,203.0,308.1,203.0],[30.435277228695895,274.002590936372,743.4963570494341,272.99745724789864,743.5647227713041,321.497409063628,30.503642950565904,322.50254275210136],[29.302396170131033,370.00284339279887,769.6324021020525,368.99720089123525,769.697603829869,416.99715660720113,29.367597897947462,418.00279910876475]]
 
             };
         },
@@ -62,15 +66,15 @@
             var jdata = JSON.stringify(JSON.parse(this.jsonDemo), null, 4);
             var loading = this.$loading({fullscreen:false,target:document.querySelector(".outer_add")});
             this.intervalid1 = setTimeout(() => {
-//                this.showJson = JSON.parse(this.jsonDemo);
                 document.getElementById('show_common_json').innerHTML= "赠汪伦\n" +'<br/>'+
                     "【唐】李白\n"+'<br/>'+
                     "李白乘舟将欲行,忽闻岸上踏歌声。"+'<br/>' +
                     "桃花潭水深千尺,不及汪伦送我情。";
                 clearInterval(this.intervalid1);
                 this.isCheck= false;
-                loading.close();
+                this.plotBox(this.currentBox,this.dialogImageUrl,loading);
             }, 2000);
+
         },
         methods: {
             urlCheck(){
@@ -93,8 +97,7 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        loading.close();
-						console.log(response.data);
+						console.log(response);
 
 						var text =''
                         response.data.forEach((res)=>{
@@ -102,10 +105,14 @@
 						});
                         if(response.data.length==0){
                             text = "未识别到内容，请重新识别！"
-                        }
+                        }else{
+                            this.plotBox(response.box,response.image,loading);
+						}
+
 						document.getElementById('show_common_json').innerHTML= text;
                         loading.close();
                         this.isCheck= false;
+
                     },
 					error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');
@@ -114,6 +121,14 @@
 					}
                 });
                 e.preventDefault();
+            },
+            plotBox(boxes,src,loading){
+                $('#myCanvas').css('display','inline-block');
+                canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"),()=>{
+                    this.isResult = true;
+                    this.isLoading = false;
+                    loading.close();
+                });
             },
             changeImage(e){
                 this.imageIsBig = false;
@@ -130,6 +145,9 @@
                     this.$message.error('请上传小于20M的图片！');
                 }else {
                     this.imageRight = true;
+                    this.isResult = false;
+                    $('#myCanvas').css('display','none');
+                    clearCanvas(document.getElementById("myCanvas"));
                     this.uploadImage(e);
                 }
             },

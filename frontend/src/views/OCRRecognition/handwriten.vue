@@ -5,7 +5,6 @@
 				<div class="image_outer">
 					<span class="original_style">原始图片</span>
 					<div class="outer_add" v-loading="isLoading">
-
 						<img class="show_add_image" :src="dialogImageUrl" id="img" v-show="!isResult">
 						<canvas id="myCanvas" class="show_add_image"></canvas>
 					</div>
@@ -91,7 +90,6 @@
                     success:(response)=>{
                         console.log(response);
                         this.showJson = response.data.handwritten_content;
-                        $('#myCanvas').css('display','inline-block');
                         this.plotBox(response.data.box,response.image)
                     },
                     error:(error)=>{
@@ -103,6 +101,7 @@
                 e.preventDefault();
             },
             plotBox(boxes,src){
+                $('#myCanvas').css('display','inline-block');
                 canvasBox(boxes,src,document.getElementById("img"),document.getElementById("myCanvas"),()=>{
                     this.isResult = true;
                     this.isLoading = false;
