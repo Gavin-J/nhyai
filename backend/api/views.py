@@ -591,6 +591,7 @@ class OcrIDCardViewSet(viewsets.ModelViewSet):
         # print (file_path)
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         com_arr = check_result['com_res']
         dataMap = {}
         boxArr = []
@@ -626,13 +627,14 @@ class OcrIDCardViewSet(viewsets.ModelViewSet):
         if (len(arr) == 0 or count < 3):
             ret = 1
             msg = "请上传身份证图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1167,6 +1169,7 @@ class OcrDrivinglicenseViewSet(viewsets.ModelViewSet):
         # print (file_path)
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         com_arr = check_result['com_res']
         dataMap = {}
         boxArr = []
@@ -1234,13 +1237,14 @@ class OcrDrivinglicenseViewSet(viewsets.ModelViewSet):
             ret = 1
             msg = "请上传驾驶证图片"
 
-        serializer.save(data=dataMap, ret=ret, msg=msg,box=boxArr,
+        serializer.save(data=dataMap, ret=ret, msg=msg,box=boxArr, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1275,6 +1279,7 @@ class OcrVehiclelicenseViewSet(viewsets.ModelViewSet):
         # print (file_path)
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         com_arr = check_result['com_res']
         dataMap = {}
         boxArr = []
@@ -1339,13 +1344,14 @@ class OcrVehiclelicenseViewSet(viewsets.ModelViewSet):
             ret = 1
             msg = "请上传行驶证图片"
 
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1379,6 +1385,7 @@ class OcrBusinesslicenseViewSet(viewsets.ModelViewSet):
         file_path = iserializer.image.path
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         com_arr = check_result['com_res']
         dataMap = {}
         boxArr = []
@@ -1434,13 +1441,14 @@ class OcrBusinesslicenseViewSet(viewsets.ModelViewSet):
         if(len(dataMap) <= 4 or dataMap["license_type"] != "营业执照"):
             ret = 1
             msg = "请上传营业执照图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1475,6 +1483,7 @@ class OcrBankcardViewSet(viewsets.ModelViewSet):
         # print (file_path)
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         com_arr = check_result['com_res']
         dataMap = {}
         boxArr = []
@@ -1508,13 +1517,14 @@ class OcrBankcardViewSet(viewsets.ModelViewSet):
             ret = 1
             msg = "请上传银行卡图片"
 
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text']
         }
         UpdateHistoryRecord(iserializer, FILETYPE.Image.value,
@@ -1676,6 +1686,7 @@ class OcrBusinessCardViewSet(viewsets.ModelViewSet):
         # print (file_path)
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         com_arr = check_result['com_res']
         dataMap = {}
         boxArr = []
@@ -1730,13 +1741,14 @@ class OcrBusinessCardViewSet(viewsets.ModelViewSet):
         if (len(arr) == 0 or count < 1 or dataMap["business_name"] == "其他"):
             ret = 1
             msg = "请上传名片图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
