@@ -138,6 +138,7 @@ class OcrGeneral(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=255, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrIDCard(models.Model):

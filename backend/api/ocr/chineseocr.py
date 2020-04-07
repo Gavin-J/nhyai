@@ -15,9 +15,10 @@ import sys
 sys.path.append(os.path.join(os.getcwd(),"backend","api","ocr"))
 # print(sys.path)
 from ocrmodel import model
-from apphelper.image import union_rbox,adjust_box_to_origin
+from apphelper.image import union_rbox,adjust_box_to_origin,draw_boxes
 from application import idcard,drivinglicense,vehiclelicense,businesslicense,bankcard,vehicleplate,businesscard
 import numpy as np
+from django.conf import settings
 
 class OCR:
     """通用OCR识别、身份证识别"""
@@ -71,6 +72,9 @@ class OCR:
         textAngle = True ##文字检测
         textLine = False ##只进行单行识别
         text = ''
+
+        file_name = os.path.basename(img_file)
+        file_path = os.path.dirname(img_file)
 
         # img = cv2.imread(img_file)##GBR
         img,is_exif,H,W = self.setExif(img_file)
@@ -247,8 +251,20 @@ class OCR:
             
         
         timeTake = time.time()-timeTake
-            
-        return {'res':res,'timeTake':round(timeTake,4), 'text':text, 'com_res': com_res}
+
+        #draw box in to original image
+        drawBoxes = []
+        draw_filename = file_name.split('.')[0] + '_drawed.' + file_name.split('.')[1]
+        drawPath = os.path.join(file_path,draw_filename)
+        drawUrl = settings.FILE_URL +  settings.MEDIA_URL + 'photos' + '/' + draw_filename
+        img =  cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+        if len(com_res) > 0:
+            for arr in com_res:
+               drawBoxes.append(arr["box"])
+            drawImg = draw_boxes(img,drawBoxes)
+            cv2.imwrite(drawPath, drawImg)
+
+        return {'res':res,'timeTake':round(timeTake,4), 'text':text, 'com_res': com_res, 'drawUrl': drawUrl}
 
 if __name__ == '__main__':
     ocrTest = OCR()

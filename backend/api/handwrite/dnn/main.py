@@ -98,7 +98,7 @@ def text_ocr(img,scale,maxScale,TEXT_LINE_SCORE, filePath, fileName):
                     result.append(text)
         result = sorted(result,key=lambda x:sum(x['box'][1::2]))
 
-        #draw box in to origenal image
+        #draw box in to original image
         if len(drawBoxes) > 0:
             drawImg = draw_boxes(img,drawBoxes)
             # drawPath = os.path.join(os.getcwd(),"backend","api","handwrite","test","draw.jpg")

@@ -543,6 +543,7 @@ class OcrGeneralViewSet(viewsets.ModelViewSet):
         # print (file_path)
         check_result = OCR().getWordRecognition(file_path, bill_model)
         arr = check_result['res']
+        drawUrl = check_result['drawUrl']
         dataArr = []
         boxArr = []
         for each in arr:
@@ -551,10 +552,11 @@ class OcrGeneralViewSet(viewsets.ModelViewSet):
         result = {
             'content': dataArr,
             'box': boxArr,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
-        serializer.save(data=dataArr, ret=ret, msg=msg,box=boxArr,
+        serializer.save(data=dataArr, ret=ret, msg=msg,box=boxArr,draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记

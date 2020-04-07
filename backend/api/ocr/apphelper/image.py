@@ -548,3 +548,18 @@ def adjust_box_to_origin(img,angle, result):
         newresult.append({'name':line['name'],'text':line['text'],'box':box})
        
     return newresult
+
+def draw_boxes(im,boxes):
+    for box in boxes:
+        x1,y1,x2,y2,x3,y3,x4,y4 = box[:8]
+        rectPoints = [[int(x1),int(y1)], [int(x2),int(y2)],[int(x3),int(y3)],[int(x4),int(y4)]]
+        # print (rectPoints)
+
+        # BGR定义
+        rectColour = (255, 0, 0)
+        cv2.line(im, tuple(rectPoints[0]), tuple(rectPoints[1]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[1]), tuple(rectPoints[2]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[2]), tuple(rectPoints[3]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[3]), tuple(rectPoints[0]), rectColour, 2)
+
+    return im
