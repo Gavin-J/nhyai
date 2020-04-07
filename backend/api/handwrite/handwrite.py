@@ -46,6 +46,8 @@ class HandWrite:
     def getWord(self, img_file):
         ##基于exif信息文字朝向检测
         img_exif = Image.open(img_file)
+        file_name = os.path.basename(img_file)
+        file_path = os.path.dirname(img_file)
         img = cv2.imread(img_file)
         is_exif = False
         try:
@@ -79,11 +81,11 @@ class HandWrite:
 
             image = np.array(img)
             image =  cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-            data = text_ocr(image,scale,maxScale,TEXT_LINE_SCORE)
+            data, drawUrl = text_ocr(image,scale,maxScale,TEXT_LINE_SCORE, file_path, file_name)
 
-            res = {'data':data,'errCode':0}
+            res = {'data':data,'errCode':0, 'drawUrl': drawUrl}
         else:
-            res = {'data':[],'errCode':3}
+            res = {'data':[],'errCode':3, 'drawUrl': ''}
         return res
 
 

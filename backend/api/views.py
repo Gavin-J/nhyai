@@ -1549,6 +1549,7 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         check_result = HandWrite().getWord(file_path)
         # print (check_result)
         arr = check_result['data']
+        drawUrl = check_result['drawUrl']
         dataArr = []
         dataBox = []
         dataMap = {}
@@ -1560,6 +1561,7 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
                 dataBox.append(each["box"])
 
         dataMap["handwritten_content"] = dataArr
+        dataMap["drawUrl"] = drawUrl
         dataMap["box"] = dataBox
 
         # result = check_result

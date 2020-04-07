@@ -12,6 +12,8 @@ from dnn.text import detect_lines as textModel
 from PIL import Image
 import numpy as np
 import os
+import cv2
+from django.conf import settings
 
 def solve(box):
      """
@@ -59,26 +61,54 @@ def rotate_cut_img(im,box,leftAdjust=0.0,rightAdjust=0.0):
     box = {'cx':x_center+xmin_,'cy':y_center+ymin_,'w':newW,'h':newH,'degree':degree_}
     return tmpImg
 
+def draw_boxes(im,boxes):
+    for box in boxes:
+        x1,y1,x2,y2,x3,y3,x4,y4 = box[:8]
+        rectPoints = [[int(x1),int(y1)], [int(x2),int(y2)],[int(x3),int(y3)],[int(x4),int(y4)]]
+        # print (rectPoints)
 
-def text_ocr(img,scale,maxScale,TEXT_LINE_SCORE):
+        # BGR定义
+        rectColour = (255, 0, 0)
+        cv2.line(im, tuple(rectPoints[0]), tuple(rectPoints[1]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[1]), tuple(rectPoints[2]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[2]), tuple(rectPoints[3]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[3]), tuple(rectPoints[0]), rectColour, 2)
+
+    return im
+
+def text_ocr(img,scale,maxScale,TEXT_LINE_SCORE, filePath, fileName):
     try:
         boxes,scores = textModel(img,scale=scale,maxScale=maxScale)
         result = []
+        drawBoxes = []
+        draw_filename = fileName.split('.')[0] + '_drawed.' + fileName.split('.')[1]
+        drawPath = os.path.join(filePath,draw_filename)
+        drawUrl = settings.FILE_URL +  settings.MEDIA_URL + 'photos' + '/' + draw_filename
         im= Image.fromarray(img)
         for i,box in enumerate(boxes):
             if scores[i]>TEXT_LINE_SCORE:
+                drawBoxes.append(box)
                 tmpImg = rotate_cut_img(im,box,leftAdjust=0.01,rightAdjust=0.01)
-                tmpPath = os.path.join(os.getcwd(),"backend","api","handwrite","test", str(i) + '.jpg')
-                tmpImg.save(tmpPath, quality=95)
+                # tmpPath = os.path.join(os.getcwd(),"backend","api","handwrite","test", str(i) + '.jpg')
+                # tmpImg.save(tmpPath, quality=95)
                 text = ocrModel(tmpImg)
                 if text['text']!='':
                     text['box'] = [ int(x) for x in box]
                     text['textprob']=round(float(scores[i]),2)
                     result.append(text)
         result = sorted(result,key=lambda x:sum(x['box'][1::2]))
+
+        #draw box in to origenal image
+        if len(drawBoxes) > 0:
+            drawImg = draw_boxes(img,drawBoxes)
+            # drawPath = os.path.join(os.getcwd(),"backend","api","handwrite","test","draw.jpg")
+            cv2.imwrite(drawPath, drawImg)
+
     except:
         result = [{
-            "text": '不支持的文件内容'
+            "text": '不支持的文件内容',
+            "box": [],
+            "drawUrl": ''
         }]
-    return result
+    return result,drawUrl
 
