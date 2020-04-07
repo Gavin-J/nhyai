@@ -1561,7 +1561,7 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
                 dataBox.append(each["box"])
 
         dataMap["handwritten_content"] = dataArr
-        dataMap["drawUrl"] = drawUrl
+        dataMap["draw_url"] = drawUrl
         dataMap["box"] = dataBox
 
         # result = check_result
