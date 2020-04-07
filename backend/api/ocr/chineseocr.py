@@ -231,6 +231,17 @@ class OCR:
                 res = res.res
                 res =[ {'text':res[key],'name':key,'box':{}} for key in res]
                 text = self.getTextList(img,angle, result)
+                result = union_rbox(result,0.2)
+                com_res = [{'text':x['text'],
+                        'name':str(i),
+                        'box':{'cx':x['cx'],
+                               'cy':x['cy'],
+                               'w':x['w'],
+                               'h':x['h'],
+                               'angle':x['degree']
+                              }
+                       } for i,x in enumerate(result)]
+                com_res = adjust_box_to_origin(np.copy(img),angle, com_res)##修正box
             
             elif billModel=='名片':
                 res = businesscard.businesscard(result)

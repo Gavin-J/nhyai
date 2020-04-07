@@ -1619,7 +1619,7 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         # arr = check_result['res']
         # carPlateIdentity = CarPlateIdentity()
         # ret, car_num = carPlateIdentity.car_plate_identity(file_path)
-        ret, car_num,box = settings.CARPLATEIDENTITY.car_plate_identity(file_path)
+        ret, car_num,box,drawUrl = settings.CARPLATEIDENTITY.car_plate_identity(file_path)
         dataMap = {}
         check_result = {}
         # count = 0
@@ -1631,6 +1631,7 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         else:
             dataMap['plate_no'] = car_num
             dataMap['box'] = box
+            dataMap['draw_url'] = drawUrl
             check_result['text'] = car_num
 
         # dataMap["plate_no"] = ""
