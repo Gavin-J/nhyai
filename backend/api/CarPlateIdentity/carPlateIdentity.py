@@ -3,6 +3,7 @@ import os
 import sys
 import numpy as np
 import tensorflow as tf
+from django.conf import settings
 
 char_table = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
               'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '川', '鄂', '赣', '甘', '贵',
@@ -566,6 +567,20 @@ class CarPlateIdentity:
         #             text_list.append(char_table[i])
         #         return text_list
 
+    def draw_boxes(self, im,box):
+        x1,y1,x2,y2,x3,y3,x4,y4 = box[:8]
+        rectPoints = [[int(x1),int(y1)], [int(x2),int(y2)],[int(x3),int(y3)],[int(x4),int(y4)]]
+        # print (rectPoints)
+
+        # BGR定义
+        rectColour = (255, 0, 0)
+        cv2.line(im, tuple(rectPoints[0]), tuple(rectPoints[1]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[1]), tuple(rectPoints[2]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[2]), tuple(rectPoints[3]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[3]), tuple(rectPoints[0]), rectColour, 2)
+
+        return im
+
     def car_plate_identity(self, car_path):
         
         img_path = os.path.abspath(car_path)
@@ -577,6 +592,21 @@ class CarPlateIdentity:
 
         # 车牌定位
         car_plate_list,box  = self.locate_carPlate(img,pred_img)
+
+        # 根据box绘制到原图中
+        box_image = cv2.imread(car_path)
+        # box_image =  cv2.cvtColor(box_image, cv2.COLOR_RGB2BGR)
+        file_name = os.path.basename(car_path)
+        file_path = os.path.dirname(car_path)
+        draw_filename = file_name.split('.')[0] + '_drawed.' + file_name.split('.')[1]
+        drawPath = os.path.join(file_path,draw_filename)
+        drawUrl = settings.FILE_URL +  settings.MEDIA_URL + 'photos' + '/' + draw_filename
+        boxes = []
+        if len(box) > 0:
+            drawImg = self.draw_boxes(box_image,box)
+            cv2.imwrite(drawPath, drawImg)
+        else:
+            drawUrl = ''
 
         # CNN车牌过滤
         ret,car_plate = self.cnn_select_carPlate(car_plate_list)
@@ -598,7 +628,7 @@ class CarPlateIdentity:
         # print(car_num)
 
         # cv2.waitKey(0)
-        return ret, car_num,box
+        return ret, car_num,box,drawUrl
 
 if __name__ == '__main__':
     isgpu = True

@@ -138,6 +138,7 @@ class OcrGeneral(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=255, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrIDCard(models.Model):
@@ -152,6 +153,7 @@ class OcrIDCard(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class VideoFileUpload(models.Model):
@@ -228,6 +230,7 @@ class OcrDrivinglicense(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrVehiclelicense(models.Model):
@@ -242,6 +245,7 @@ class OcrVehiclelicense(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrBusinesslicense(models.Model):
@@ -256,6 +260,7 @@ class OcrBusinesslicense(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrBankcard(models.Model):
@@ -270,6 +275,7 @@ class OcrBankcard(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrHandWritten(models.Model):
@@ -310,6 +316,7 @@ class OcrBusinessCard(models.Model):
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
     box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class SensitivityType(models.Model):
