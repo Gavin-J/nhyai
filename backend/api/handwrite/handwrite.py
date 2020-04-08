@@ -80,7 +80,7 @@ class HandWrite:
                     img = Image.fromarray(img).transpose(Image.ROTATE_90)
 
             image = np.array(img)
-            image =  cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            # image =  cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             data, drawUrl = text_ocr(image,scale,maxScale,TEXT_LINE_SCORE, file_path, file_name)
 
             res = {'data':data,'errCode':0, 'drawUrl': drawUrl}

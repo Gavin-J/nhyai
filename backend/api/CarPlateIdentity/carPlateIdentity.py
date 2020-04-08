@@ -595,7 +595,7 @@ class CarPlateIdentity:
 
         # 根据box绘制到原图中
         box_image = cv2.imread(car_path)
-        box_image =  cv2.cvtColor(box_image, cv2.COLOR_RGB2BGR)
+        # box_image =  cv2.cvtColor(box_image, cv2.COLOR_RGB2BGR)
         file_name = os.path.basename(car_path)
         file_path = os.path.dirname(car_path)
         draw_filename = file_name.split('.')[0] + '_drawed.' + file_name.split('.')[1]
