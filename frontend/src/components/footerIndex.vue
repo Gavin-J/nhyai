@@ -1,11 +1,18 @@
 <template>
 	<div id="footerIndex">
-		© 2019 海南南海云网络科技有限公司
+		© {{currentYear}} 海南南海云网络科技有限公司
 	</div>
 
 </template>
 
 <script>
+	export default {
+	    data(){
+	        return{
+	            currentYear:(new Date()).getFullYear(),
+			}
+		}
+	}
 
 </script>
 
