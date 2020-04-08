@@ -67,7 +67,10 @@
                 console.log('不可能啊 ',this.showJson);
                 clearInterval(this.intervalid1);
                 this.isCheck = false;
-                loading.close();
+                this.dialogImageUrl =this.imgApi+ "/media/photos/cf403d09673f4dfabb656ccf79c5a5a9_drawed.png";
+                setTimeout(()=>{
+                    loading.close();
+                },1000)
             }, 2000);
         },
         methods: {
@@ -94,6 +97,7 @@
 //                        this.uploadInfo(response);
                         console.log(response);
                         this.showJson = response.data;
+                        this.dialogImageUrl = response.data.draw_url;
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');

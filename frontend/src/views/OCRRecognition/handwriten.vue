@@ -90,7 +90,8 @@
                     success:(response)=>{
                         console.log(response);
                         this.showJson = response.data.handwritten_content;
-                        this.plotBox(response.data.box,response.image)
+//                        this.plotBox(response.data.box,response.image)
+                        this.dialogImageUrl = response.draw_url;
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');

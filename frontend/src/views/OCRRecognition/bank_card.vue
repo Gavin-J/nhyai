@@ -66,10 +66,13 @@
             var jdata = JSON.stringify(JSON.parse(this.jsonDemo), null, 4);
             let loading = this.$loading({fullscreen:false,target:document.querySelector(".outer_add")});
             this.intervalid1 = setTimeout(() => {
+                this.dialogImageUrl = this.imgApi +'/media/photos/3713fc4cb98548cbaf7b56d9d8cc2e7a_drawed.png';
                 this.showJson = JSON.parse(this.jsonDemo);
                 clearInterval(this.intervalid1);
                 this.isCheck = false;
-                loading.close();
+                setTimeout(()=>{
+                    loading.close();
+                },1000)
             }, 2000);
         },
         methods: {
@@ -94,6 +97,7 @@
                         console.log(response);
                         this.isCheck= false;
                         this.showJson  = response.data;
+                        this.dialogImageUrl = response.draw_url;
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');

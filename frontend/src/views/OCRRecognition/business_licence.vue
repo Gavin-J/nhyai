@@ -75,7 +75,10 @@
                 this.showJson = JSON.parse(this.jsonDemo);
                 clearInterval(this.intervalid1);
                 this.isCheck = false;
-                loading.close();
+                this.dialogImageUrl=this.imgApi+"/media/photos/c21440d19d2a4fd78b8251dc66de372f_drawed.jpg";
+                setTimeout(()=>{
+                    loading.close();
+                },1000)
             }, 2000)
         },
         methods: {
@@ -102,6 +105,7 @@
 //                        this.uploadInfo(response);
                         console.log(response)
                         this.showJson = response.data;
+                        this.dialogImageUrl = response.draw_url;
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');

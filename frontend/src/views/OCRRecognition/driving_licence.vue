@@ -82,7 +82,10 @@
                 clearInterval(this.intervalid1);
                 this.isCheck = false;
                 this.showResult = true;
-                loading.close();
+                this.dialogImageUrl = this.imgApi+"/media/photos/9f931ee77042432bbbd38c35be4b7b39_drawed.png";
+                setTimeout(()=>{
+                    loading.close();
+                },1000)
             }, 2000)
         },
         methods: {
@@ -114,6 +117,7 @@
                         }else {
                             this.showJson = response.data;
                             this.showResult = true;
+                            this.dialogImageUrl = response.draw_url;
 						}
                     },
                     error:(error)=>{

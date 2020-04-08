@@ -106,9 +106,9 @@
                         if(response.data.length==0){
                             text = "未识别到内容，请重新识别！"
                         }else{
-                            this.plotBox(response.box,response.image,loading);
+//                            this.plotBox(response.box,response.image,loading);
 						}
-
+						this.dialogImageUrl = response.draw_url;
 						document.getElementById('show_common_json').innerHTML= text;
                         loading.close();
                         this.isCheck= false;

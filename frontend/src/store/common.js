@@ -12,6 +12,7 @@ export default {
 		Vue.prototype.api = "http://172.31.4.31:8000";	//卫俊
 		// Vue.prototype.api = "http://172.31.20.59:8000";	//卫俊
 		// Vue.prototype.api = "https://ai.hn-ssc.com";	//卫俊
+		Vue.prototype.imgApi = "https://ai.hn-ssc.com";
 
 		//Vue.prototype.api = "http://www.hn-ssc.com";	//正式环境
         // Vue.prototype.api = "";	//打包环境
