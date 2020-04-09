@@ -154,7 +154,7 @@
 	.local_upload label:hover{background-color: #6087F7;color: white;}
 	.show_input_outer{display: flex;flex: 1;}
 	#show_json{margin: 50px auto;padding: 10px 30px;}
-	#show_json p{height: 30px;line-height: 30px;}
+	#show_json p{line-height: 30px;text-indent: -3em;margin-left: 3em;}
 
 	.advantage_product span{display: inline-block;padding: 10px;}
 	.show_word{width: 192px;height: 148px;  display: inline-block;  text-align: center;  font-size: 22px;  font-style: normal;  color: #fff;  box-sizing: border-box;  padding-top: 58px;}
