@@ -605,6 +605,9 @@ class CarPlateIdentity:
         if len(box) > 0:
             drawImg = self.draw_boxes(box_image,box)
             cv2.imwrite(drawPath, drawImg)
+            x1,y1,x2,y2,x3,y3,x4,y4 = box[:8]
+            newbox = [ x1,y1,x2,y2,x3,y3,x4,y4]
+            boxes.append(newbox)
         else:
             drawUrl = ''
 
@@ -628,7 +631,7 @@ class CarPlateIdentity:
         # print(car_num)
 
         # cv2.waitKey(0)
-        return ret, car_num,box,drawUrl
+        return ret, car_num,boxes,drawUrl
 
 if __name__ == '__main__':
     isgpu = True

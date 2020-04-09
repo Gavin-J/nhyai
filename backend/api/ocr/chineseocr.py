@@ -272,7 +272,7 @@ class OCR:
         if len(com_res) > 0:
             for arr in com_res:
                drawBoxes.append(arr["box"])
-            drawImg = draw_boxes(img,drawBoxes)
+            drawImg = draw_boxes(np.array(img),drawBoxes)
             cv2.imwrite(drawPath, drawImg)
 
         return {'res':res,'timeTake':round(timeTake,4), 'text':text, 'com_res': com_res, 'drawUrl': drawUrl}
