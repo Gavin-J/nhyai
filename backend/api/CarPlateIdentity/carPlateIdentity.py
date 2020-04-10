@@ -574,10 +574,10 @@ class CarPlateIdentity:
 
         # BGR定义
         rectColour = (255, 0, 0)
-        cv2.line(im, tuple(rectPoints[0]), tuple(rectPoints[1]), rectColour, 2)
-        cv2.line(im, tuple(rectPoints[1]), tuple(rectPoints[2]), rectColour, 2)
-        cv2.line(im, tuple(rectPoints[2]), tuple(rectPoints[3]), rectColour, 2)
-        cv2.line(im, tuple(rectPoints[3]), tuple(rectPoints[0]), rectColour, 2)
+        cv2.line(im, tuple(rectPoints[0]), tuple(rectPoints[1]), rectColour)
+        cv2.line(im, tuple(rectPoints[1]), tuple(rectPoints[2]), rectColour)
+        cv2.line(im, tuple(rectPoints[2]), tuple(rectPoints[3]), rectColour)
+        cv2.line(im, tuple(rectPoints[3]), tuple(rectPoints[0]), rectColour)
 
         return im
 
