@@ -51,6 +51,42 @@ if(platform.system() == "Windows"):
     import win32com.client as wc
     import pythoncom
 import hashlib
+import math
+import imutils
+
+ #霍夫矫正旋转图片角度
+def rectifyImgAngle(imgPath):
+    img = cv2.imread(imgPath)
+    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray,50,150,apertureSize = 3)
+
+    #霍夫变换
+    lines = cv2.HoughLines(edges,1,np.pi/180,0)
+    for rho,theta in lines[0]:
+            a = np.cos(theta)
+            b = np.sin(theta)
+            x0 = a*rho
+            y0 = b*rho
+            x1 = int(x0 + 1000*(-b))
+            y1 = int(y0 + 1000*(a))
+            x2 = int(x0 - 1000*(-b))
+            y2 = int(y0 - 1000*(a))
+            if x1 == x2 or y1 == y2:
+                continue
+            t = float(y2-y1)/(x2-x1)
+            rotate_angle = math.degrees(math.atan(t))
+            if rotate_angle > 45:
+                rotate_angle = -90 + rotate_angle
+            elif rotate_angle < -45:
+                rotate_angle = 90 + rotate_angle
+            changeImgAngle(imgPath,-rotate_angle)    
+            return  rotate_angle
+
+#旋转图片角度
+def changeImgAngle(imgPath,angle):
+    img = cv2.imread(imgPath)
+    rotated_round = imutils.rotate_bound(img, angle)
+    cv2.imwrite(imgPath, rotated_round)              
 
 #对文件进行hash
 def get_file_md5(f):
@@ -1555,10 +1591,17 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
                 iserializer.image_url), File(img_temp))
 
         file_path = iserializer.image.path
+        #霍夫矫正旋转图片角度
+        angle = rectifyImgAngle(file_path)
         # print (file_path)
         # check_result = OCR().getWordRecognition(file_path, bill_model)
         from handwrite.handwrite import HandWrite
         check_result = HandWrite().getWord(file_path)
+        #识别后还原图片角度
+        splitStr = file_path.split(".")
+        drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
+        changeImgAngle(drawedImgPath,angle)
+        changeImgAngle(file_path,angle)
         # print (check_result)
         arr = check_result['data']
         drawUrl = check_result['drawUrl']
