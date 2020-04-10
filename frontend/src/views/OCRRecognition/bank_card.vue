@@ -32,7 +32,7 @@
 						<p>卡号：{{showJson.bank_cardno|noCheck}}</p>
 						<p>有效期：{{showJson.expiry_date|noCheck}}</p>
 						<p>银行卡类型：{{showJson.card_type|noCheck}}</p>
-						<p>姓名：{{showJson.card_name|noCheck}}</p>
+						<p>卡名称：{{showJson.card_name|noCheck}}</p>
 					</div>
 				</div>
 			</el-col>
