@@ -136,11 +136,8 @@ class vehiclelicense:
             vehicleplate = re.findall("[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}",txt)
             if self.is_vehicleplate == True and len(vehicleplate) > 0:
                 self.is_vehicleplate = False
-            else:
-                res = re.findall("[\u4E00-\u9FA5\-]+[\u4E00-\u9FA5]+[A-Za-z0-9]+$",txt)
 
-            if len(res) == 0:
-                res = re.findall("品牌型号[\u4E00-\u9FA5]+[A-Za-z0-9]+",txt)
+            res = re.findall("品牌型号[\u4E00-\u9FA5]+[A-Za-z0-9]+",txt)
             if len(res)>0:
                 model["品牌型号"] = res[0].replace('品牌型号','').replace('非营运','').replace('使用性质','').replace('营运','').replace('性质','').replace('品脾型号','')
                 self.res.update(model)
