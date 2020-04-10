@@ -1546,6 +1546,12 @@ class OcrBankcardViewSet(viewsets.ModelViewSet):
             if(each['name'] == '卡类型'):
                 name = "card_type"
                 count = count + 1
+            if(each['name'] == '有效期'):
+                name = "expiry_date"
+                count = count + 1
+            if(each['name'] == '卡名称'):
+                name = "card_name"
+                count = count + 1
             dataMap[name] = each['text']
             # dataMap[each['name']] = each['text']
         # result = check_result

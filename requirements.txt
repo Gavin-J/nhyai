@@ -22,3 +22,5 @@ pymysql==0.9.3
 mysqlclient==1.4.4
 jpush==3.3.7
 django-extensions==2.2.5
+imutils==0.5.3
+Pinyin2Hanzi==0.1.1
