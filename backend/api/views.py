@@ -1598,16 +1598,16 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
 
         file_path = iserializer.image.path
         #霍夫矫正旋转图片角度
-        angle = rectifyImgAngle(file_path)
+        # angle = rectifyImgAngle(file_path)
         # print (file_path)
         # check_result = OCR().getWordRecognition(file_path, bill_model)
         from handwrite.handwrite import HandWrite
         check_result = HandWrite().getWord(file_path)
         #识别后还原图片角度
-        splitStr = file_path.split(".")
-        drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
-        changeImgAngle(drawedImgPath,angle)
-        changeImgAngle(file_path,angle)
+        # splitStr = file_path.split(".")
+        # drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
+        # changeImgAngle(drawedImgPath,angle)
+        # changeImgAngle(file_path,angle)
         # print (check_result)
         arr = check_result['data']
         drawUrl = check_result['drawUrl']
