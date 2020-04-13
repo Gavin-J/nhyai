@@ -1619,15 +1619,12 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         dataBox = []
         dataMap = {}
         dataMap["handwritten_content"] = ""
-        dataMap["box"] = ""
         for each in arr:
             if len(arr) >= 0:
                 dataArr.append(each["text"])
                 dataBox.append(each["box"])
 
         dataMap["handwritten_content"] = dataArr
-        dataMap["draw_url"] = drawUrl
-        dataMap["box"] = dataBox
 
         # result = check_result
         serializer.save(data=dataMap, ret=ret, msg=msg, box=dataBox, draw_url=drawUrl,
@@ -1685,8 +1682,6 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
             check_result['text'] = "请上传车牌图片"
         else:
             dataMap['plate_no'] = car_num
-            dataMap['box'] = box
-            dataMap['draw_url'] = drawUrl
             check_result['text'] = car_num
 
         # dataMap["plate_no"] = ""
