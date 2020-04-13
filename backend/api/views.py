@@ -244,6 +244,9 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
     if file_type == FILETYPE.Video.value and result.get('status') is not None and result.get('status') == 3:
         process_status = 3
 
+    draw_url = ""
+    if result.get('draw_url') is not None:
+        draw_url = result["draw_url"]
 
     HistoryRecord.objects.create(
         file_id=file_id, file_name=file_name,
@@ -254,7 +257,8 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
         porn_sensitivity_level=porn_sensitivity_level, content=content,
         web_text=web_text, app_text=app_text, process_status=process_status,
         system_id=system_id, channel_id=channel_id, user_id=user_id,
-        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number
+        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number,
+        draw_url=draw_url
     )
 
 def UpdateHistoryHashRecord(file_id, file_name, file_url, file_type, result,hash_value):
@@ -1598,16 +1602,16 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
 
         file_path = iserializer.image.path
         #霍夫矫正旋转图片角度
-        angle = rectifyImgAngle(file_path)
+        # angle = rectifyImgAngle(file_path)
         # print (file_path)
         # check_result = OCR().getWordRecognition(file_path, bill_model)
         from handwrite.handwrite import HandWrite
         check_result = HandWrite().getWord(file_path)
         #识别后还原图片角度
-        splitStr = file_path.split(".")
-        drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
-        changeImgAngle(drawedImgPath,angle)
-        changeImgAngle(file_path,angle)
+        # splitStr = file_path.split(".")
+        # drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
+        # changeImgAngle(drawedImgPath,angle)
+        # changeImgAngle(file_path,angle)
         # print (check_result)
         arr = check_result['data']
         drawUrl = check_result['drawUrl']
@@ -1626,12 +1630,14 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         dataMap["box"] = dataBox
 
         # result = check_result
-        serializer.save(data=dataMap, ret=ret, msg=msg,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=dataBox, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
+            'box': dataBox,
+            'draw_url': drawUrl,
             'text': check_result['data'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1696,12 +1702,14 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         # if (len(arr) == 0 or count < 1 or dataMap["plate_no"] == "其他"):
         #     ret = 1
         #     msg = "请上传车牌图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=box, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
+            'box': box,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }

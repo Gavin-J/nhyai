@@ -289,6 +289,8 @@ class OcrHandWritten(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrVehicleplate(models.Model):
@@ -302,6 +304,8 @@ class OcrVehicleplate(models.Model):
     ret = models.IntegerField(_('ret'), null=True, blank=True)
     msg = models.TextField(max_length=255, default='')
     data = models.TextField(max_length=2048, default='')
+    box = models.TextField(max_length=1024, default='')
+    draw_url = models.URLField(_('draw_url'), null=True, blank=True)
 
 
 class OcrBusinessCard(models.Model):
@@ -380,6 +384,8 @@ class HistoryRecord(models.Model):
     duration = models.CharField(
         _('duration'), max_length=8, null=True, blank=True)
     serial_number = models.IntegerField(_('serial_number'), null=True, blank=True)
+    draw_url = models.URLField(
+        _('draw_url'), null=True, blank=True)
 
 class HistoryHashRecord(models.Model):
     file_id = models.CharField(

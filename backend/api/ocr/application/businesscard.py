@@ -52,7 +52,7 @@ class businesscard:
         for i in range(self.N):
             txt = self.result[i]['text'].replace(' ', '')
             txt = txt.replace(' ', '')  
-            if positionClass().check_positionWords(txt):
+            if positionClass().check_positionWords(txt.lower()):
                 position['职位'] = txt
                 self.res.update(position)
                 break
@@ -87,17 +87,17 @@ class businesscard:
             ##身份证地址
             if '地址' in txt  or  '省' in txt or '市' in txt or '县' in txt or '街' in txt or '村' in txt or "镇" in txt or "区" in txt or "城" in txt or "室" in txt or "房" in txt or "园" in txt:
                 if address_cx !=0  and cx > address_cx - 200:
-                    addString.append(txt.replace('地址:',''))
+                    addString.append(txt.replace('地址:','').lstrip('地址').lstrip('地'))
                 
                 if address_cx == 0:
-                    addString.append(txt.replace('地址:',''))
+                    addString.append(txt.replace('地址:','').lstrip('地址').lstrip('地'))
                     address_cx = cx
             else:
                 ##增加地址第二行判断
                 res = re.findall(r'\d+号',txt)
             
             if len(res)>0:
-                addString.append(txt.replace('地址:',''))
+                addString.append(txt.replace('地址:','').lstrip('地址').lstrip('地'))
             
         if len(addString)>0:
             address['地址']  =''.join(addString)
