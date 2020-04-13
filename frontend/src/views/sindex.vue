@@ -149,7 +149,12 @@
 					center>
 					<div class="show_video_outer" v-show="preLookInfo.channel_id !==4">
 						<div class="image_con" v-show="fileSort ==1">
-							<el-image
+							<el-image v-if="preLookInfo.draw_url"
+								style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
+								:src="preLookInfo.draw_url"
+								:preview-src-list="srcList">
+							</el-image>
+							<el-image v-else
 								style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
 								:src="preLookInfo.file_url"
 								:preview-src-list="srcList">
@@ -748,7 +753,11 @@
                 this.preLookInfo = item;
 				this.getRespectInfo(item.id);
                 this.fileSort =item.file_type;
-                this.srcList.push(item.file_url);
+                if(item.draw_url){
+                    this.srcList.push(item.draw_url);
+				}else {
+                    this.srcList.push(item.file_url);
+				}
                 if(this.preLookInfo.file_type ==4){
                     setTimeout(()=>{
                         document.getElementById('web_text').innerHTML = this.preLookInfo.web_text;
