@@ -1630,12 +1630,14 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         dataMap["box"] = dataBox
 
         # result = check_result
-        serializer.save(data=dataMap, ret=ret, msg=msg,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=dataBox, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
+            'box': dataBox,
+            'draw_url': drawUrl,
             'text': check_result['data'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1700,12 +1702,14 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         # if (len(arr) == 0 or count < 1 or dataMap["plate_no"] == "其他"):
         #     ret = 1
         #     msg = "请上传车牌图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=box, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
+            'box': box,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
