@@ -1478,7 +1478,10 @@ class OcrBusinesslicenseViewSet(viewsets.ModelViewSet):
             if(each['name'] == '经营范围'):
                 name = "scope"
             dataMap[name] = each['text']
-        if(len(dataMap) <= 4 or dataMap["license_type"] != "营业执照"):
+        if dataMap["license_type"] != "营业执照" and len(dataMap) >= 8:
+            dataMap["license_type"] = "营业执照"
+
+        if len(dataMap) <= 4:
             ret = 1
             msg = "请上传营业执照图片"
         serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
