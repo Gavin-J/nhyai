@@ -244,6 +244,9 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
     if file_type == FILETYPE.Video.value and result.get('status') is not None and result.get('status') == 3:
         process_status = 3
 
+    draw_url = ""
+    if result.get('draw_url') is not None:
+        draw_url = result["draw_url"]
 
     HistoryRecord.objects.create(
         file_id=file_id, file_name=file_name,
@@ -254,7 +257,8 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
         porn_sensitivity_level=porn_sensitivity_level, content=content,
         web_text=web_text, app_text=app_text, process_status=process_status,
         system_id=system_id, channel_id=channel_id, user_id=user_id,
-        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number
+        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number,
+        draw_url=draw_url
     )
 
 def UpdateHistoryHashRecord(file_id, file_name, file_url, file_type, result,hash_value):

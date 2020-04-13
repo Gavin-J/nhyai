@@ -344,6 +344,7 @@ class HistoryRecordSerializer(serializers.HyperlinkedModelSerializer):
     screenshot_url = serializers.JSONField(True)
     duration = serializers.JSONField(True)
     serial_number = serializers.JSONField(True)
+    draw_url = serializers.JSONField(True)
 
     class Meta:
         model = HistoryRecord
@@ -354,7 +355,7 @@ class HistoryRecordSerializer(serializers.HyperlinkedModelSerializer):
                   'politics_sensitivity_level', 'public_percent', 'public_character_level',
                   'content', 'web_text', 'app_text', 'upload_time', 'process_status',
                   'system_id', 'channel_id', 'user_id', 'screenshot_url', 'duration',
-                  'serial_number', 'ret', 'msg', 'data')
+                  'serial_number', 'draw_url','ret', 'msg', 'data')
 
     def clean_json(self, obj):
         return obj.ret, obj.msg, obj.data, obj.file_id, obj.file_name, obj.file_url,
@@ -364,4 +365,4 @@ class HistoryRecordSerializer(serializers.HyperlinkedModelSerializer):
         obj.politics_sensitivity_level, obj.public_percent, obj.public_character_level,
         obj.content, obj.web_text, obj.app_text, obj.upload_time, obj.process_status,
         obj.system_id, obj.channel_id, obj.user_id, obj.screenshot_url, obj.duration,
-        obj.serial_number
+        obj.serial_number, obj.draw_url

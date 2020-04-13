@@ -380,6 +380,8 @@ class HistoryRecord(models.Model):
     duration = models.CharField(
         _('duration'), max_length=8, null=True, blank=True)
     serial_number = models.IntegerField(_('serial_number'), null=True, blank=True)
+    draw_url = models.URLField(
+        _('draw_url'), null=True, blank=True)
 
 class HistoryHashRecord(models.Model):
     file_id = models.CharField(
