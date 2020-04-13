@@ -97,7 +97,7 @@
 //                        this.uploadInfo(response);
                         console.log(response);
                         this.showJson = response.data;
-                        this.dialogImageUrl = response.data.draw_url;
+                        this.dialogImageUrl = response.draw_url;
                     },
                     error:(error)=>{
                         this.$message.error('上传失败，请重新上传！');

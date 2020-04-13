@@ -91,7 +91,7 @@
                         console.log(response);
                         this.showJson = response.data.handwritten_content;
 //                        this.plotBox(response.data.box,response.image)
-                        this.dialogImageUrl = response.data.draw_url;
+                        this.dialogImageUrl = response.draw_url;
                         this.isLoading = false;
                     },
                     error:(error)=>{
