@@ -52,7 +52,7 @@ class businesscard:
         for i in range(self.N):
             txt = self.result[i]['text'].replace(' ', '')
             txt = txt.replace(' ', '')  
-            if positionClass().check_positionWords(txt):
+            if positionClass().check_positionWords(txt.lower()):
                 position['职位'] = txt
                 self.res.update(position)
                 break

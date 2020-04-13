@@ -3,6 +3,7 @@
 import pandas as pd
 import os
 from django.conf import settings
+from time import time
 
 class positionClass:
     def __init__(self):
@@ -26,8 +27,11 @@ class positionClass:
 
 if __name__ == '__main__':
     df = pd.read_csv(os.path.join(os.getcwd(),"backend","api","ocr","application","position.csv"),encoding='gbk')
-    input_word = "总经理"
-    flag = positionClass().check_positionWords_test(df, input_word)
+    input_word = "JAVA项目经理"
+    start = time()
+    flag = positionClass().check_positionWords_test(df, input_word.lower())
+    totaltime = time() - start
+    print ('cost: ' + str(totaltime))
     if flag == True:
         print (input_word)
     else:
