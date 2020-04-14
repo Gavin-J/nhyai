@@ -51,42 +51,8 @@ if(platform.system() == "Windows"):
     import win32com.client as wc
     import pythoncom
 import hashlib
-import math
-import imutils
-
- #霍夫矫正旋转图片角度
-def rectifyImgAngle(imgPath):
-    img = cv2.imread(imgPath)
-    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray,50,150,apertureSize = 3)
-
-    #霍夫变换
-    lines = cv2.HoughLines(edges,1,np.pi/180,0)
-    for rho,theta in lines[0]:
-            a = np.cos(theta)
-            b = np.sin(theta)
-            x0 = a*rho
-            y0 = b*rho
-            x1 = int(x0 + 1000*(-b))
-            y1 = int(y0 + 1000*(a))
-            x2 = int(x0 - 1000*(-b))
-            y2 = int(y0 - 1000*(a))
-            if x1 == x2 or y1 == y2:
-                continue
-            t = float(y2-y1)/(x2-x1)
-            rotate_angle = math.degrees(math.atan(t))
-            if rotate_angle > 45:
-                rotate_angle = -90 + rotate_angle
-            elif rotate_angle < -45:
-                rotate_angle = 90 + rotate_angle
-            changeImgAngle(imgPath,-rotate_angle)    
-            return  rotate_angle
-
-#旋转图片角度
-def changeImgAngle(imgPath,angle):
-    img = cv2.imread(imgPath)
-    rotated_round = imutils.rotate_bound(img, angle)
-    cv2.imwrite(imgPath, rotated_round)              
+from .util import rectifyImgAngle,changeImgAngle,cutImgByWH
+        
 
 #对文件进行hash
 def get_file_md5(f):
@@ -244,9 +210,6 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
     if file_type == FILETYPE.Video.value and result.get('status') is not None and result.get('status') == 3:
         process_status = 3
 
-    draw_url = ""
-    if result.get('draw_url') is not None:
-        draw_url = result["draw_url"]
 
     HistoryRecord.objects.create(
         file_id=file_id, file_name=file_name,
@@ -257,8 +220,7 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
         porn_sensitivity_level=porn_sensitivity_level, content=content,
         web_text=web_text, app_text=app_text, process_status=process_status,
         system_id=system_id, channel_id=channel_id, user_id=user_id,
-        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number,
-        draw_url=draw_url
+        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number
     )
 
 def UpdateHistoryHashRecord(file_id, file_name, file_url, file_type, result,hash_value):
@@ -1478,10 +1440,7 @@ class OcrBusinesslicenseViewSet(viewsets.ModelViewSet):
             if(each['name'] == '经营范围'):
                 name = "scope"
             dataMap[name] = each['text']
-        if dataMap["license_type"] != "营业执照" and len(dataMap) >= 8:
-            dataMap["license_type"] = "营业执照"
-
-        if len(dataMap) <= 4:
+        if(len(dataMap) <= 4 or dataMap["license_type"] != "营业执照"):
             ret = 1
             msg = "请上传营业执照图片"
         serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
@@ -1605,16 +1564,22 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
 
         file_path = iserializer.image.path
         #霍夫矫正旋转图片角度
-        # angle = rectifyImgAngle(file_path)
+        img = cv2.imread(file_path)
+        oH ,oW= img.shape[0:2]
+        angle = rectifyImgAngle(file_path)
+
         # print (file_path)
         # check_result = OCR().getWordRecognition(file_path, bill_model)
         from handwrite.handwrite import HandWrite
         check_result = HandWrite().getWord(file_path)
         #识别后还原图片角度
-        # splitStr = file_path.split(".")
-        # drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
-        # changeImgAngle(drawedImgPath,angle)
-        # changeImgAngle(file_path,angle)
+        splitStr = file_path.split(".")
+        drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
+        dnW,dnH = changeImgAngle(drawedImgPath,-angle)
+        nW,nH = changeImgAngle(file_path,-angle)
+        cutImgByWH(oW,oH,dnW,dnH,drawedImgPath)
+        cutImgByWH(oW,oH,nW,nH,file_path)
+     
         # print (check_result)
         arr = check_result['data']
         drawUrl = check_result['drawUrl']
@@ -1622,22 +1587,23 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         dataBox = []
         dataMap = {}
         dataMap["handwritten_content"] = ""
+        dataMap["box"] = ""
         for each in arr:
             if len(arr) >= 0:
                 dataArr.append(each["text"])
                 dataBox.append(each["box"])
 
         dataMap["handwritten_content"] = dataArr
+        dataMap["draw_url"] = drawUrl
+        dataMap["box"] = dataBox
 
         # result = check_result
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=dataBox, draw_url=drawUrl,
+        serializer.save(data=dataMap, ret=ret, msg=msg,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
-            'box': dataBox,
-            'draw_url': drawUrl,
             'text': check_result['data'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1685,6 +1651,8 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
             check_result['text'] = "请上传车牌图片"
         else:
             dataMap['plate_no'] = car_num
+            dataMap['box'] = box
+            dataMap['draw_url'] = drawUrl
             check_result['text'] = car_num
 
         # dataMap["plate_no"] = ""
@@ -1700,14 +1668,12 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         # if (len(arr) == 0 or count < 1 or dataMap["plate_no"] == "其他"):
         #     ret = 1
         #     msg = "请上传车牌图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg, box=box, draw_url=drawUrl,
+        serializer.save(data=dataMap, ret=ret, msg=msg,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
-            'box': box,
-            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
