@@ -51,7 +51,7 @@ if(platform.system() == "Windows"):
     import win32com.client as wc
     import pythoncom
 import hashlib
-from .util import rectifyImgAngle,changeImgAngle,cutImgByWH
+from .util import changeImgAngle,cutImgByWH
         
 
 #对文件进行hash
@@ -1573,19 +1573,20 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         #霍夫矫正旋转图片角度
         img = cv2.imread(file_path)
         oH ,oW= img.shape[0:2]
-        angle = rectifyImgAngle(file_path)
 
         # print (file_path)
         # check_result = OCR().getWordRecognition(file_path, bill_model)
         from handwrite.handwrite import HandWrite
         check_result = HandWrite().getWord(file_path)
         #识别后还原图片角度
-        splitStr = file_path.split(".")
-        drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
-        dnW,dnH = changeImgAngle(drawedImgPath,-angle)
-        nW,nH = changeImgAngle(file_path,-angle)
-        cutImgByWH(oW,oH,dnW,dnH,drawedImgPath)
-        cutImgByWH(oW,oH,nW,nH,file_path)
+        angle = check_result['angle']
+        if angle != 0:
+            splitStr = file_path.split(".")
+            drawedImgPath = splitStr[0]+"_drawed."+splitStr[1]
+            dnW,dnH = changeImgAngle(drawedImgPath,-angle)
+            nW,nH = changeImgAngle(file_path,-angle)
+            cutImgByWH(oW,oH,dnW,dnH,drawedImgPath)
+            cutImgByWH(oW,oH,nW,nH,file_path)
      
         # print (check_result)
         arr = check_result['data']

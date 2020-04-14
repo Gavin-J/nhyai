@@ -235,6 +235,8 @@ def rectifyImgAngle(imgPath):
                 rotate_angle = -90 + rotate_angle
             elif rotate_angle < -45:
                 rotate_angle = 90 + rotate_angle
+            if abs(rotate_angle) < 35: 
+                return 0              
             changeImgAngle(imgPath,int(rotate_angle))    
             return int(rotate_angle)
     return  0        

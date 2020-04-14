@@ -13,7 +13,7 @@ from dnn.main import text_ocr
 from hwconfig import scale,maxScale,TEXT_LINE_SCORE,adjust
 from ocr.config import AngleModelPb,AngleModelPbtxt
 from PIL import Image,ExifTags
-
+from api.util import rectifyImgAngle,changeImgAngle
 class HandWrite:
     """手写体识别"""
     def __init__(self):
@@ -68,6 +68,7 @@ class HandWrite:
         
         # print (img_file)
         # print (img)
+        angle = 0
         if img is not None:
             ##基于tensorflow文字朝向检测
             if adjust and is_exif is False:
@@ -78,14 +79,19 @@ class HandWrite:
                     img = Image.fromarray(img).transpose(Image.ROTATE_180)
                 elif angle==270:
                     img = Image.fromarray(img).transpose(Image.ROTATE_90)
+           
+           #霍夫矫正
+            if is_exif is False:
+                angle = rectifyImgAngle(img_file)
+                img = cv2.imread(img_file)
 
             image = np.array(img)
             # image =  cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             data, drawUrl = text_ocr(image,scale,maxScale,TEXT_LINE_SCORE, file_path, file_name)
 
-            res = {'data':data,'errCode':0, 'drawUrl': drawUrl}
+            res = {'data':data,'errCode':0, 'drawUrl': drawUrl,'angle':angle}
         else:
-            res = {'data':[],'errCode':3, 'drawUrl': ''}
+            res = {'data':[],'errCode':3, 'drawUrl': '','angle':angle}
         return res
 
 
