@@ -210,6 +210,9 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
     if file_type == FILETYPE.Video.value and result.get('status') is not None and result.get('status') == 3:
         process_status = 3
 
+    draw_url = ""
+    if result.get('draw_url') is not None:
+        draw_url = result["draw_url"]
 
     HistoryRecord.objects.create(
         file_id=file_id, file_name=file_name,
@@ -220,7 +223,8 @@ def UpdateHistoryRecord(serializer, filetype, result, maxtype, violence, porn):
         porn_sensitivity_level=porn_sensitivity_level, content=content,
         web_text=web_text, app_text=app_text, process_status=process_status,
         system_id=system_id, channel_id=channel_id, user_id=user_id,
-        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number
+        screenshot_url=screenshot_url, duration=duration, serial_number=serial_number,
+        draw_url=draw_url
     )
 
 def UpdateHistoryHashRecord(file_id, file_name, file_url, file_type, result,hash_value):
@@ -1440,7 +1444,10 @@ class OcrBusinesslicenseViewSet(viewsets.ModelViewSet):
             if(each['name'] == '经营范围'):
                 name = "scope"
             dataMap[name] = each['text']
-        if(len(dataMap) <= 4 or dataMap["license_type"] != "营业执照"):
+        if dataMap["license_type"] != "营业执照" and len(dataMap) >= 8:
+            dataMap["license_type"] = "营业执照"
+
+        if len(dataMap) <= 4:
             ret = 1
             msg = "请上传营业执照图片"
         serializer.save(data=dataMap, ret=ret, msg=msg, box=boxArr, draw_url=drawUrl,
@@ -1587,23 +1594,22 @@ class OcrHandWrittenViewSet(viewsets.ModelViewSet):
         dataBox = []
         dataMap = {}
         dataMap["handwritten_content"] = ""
-        dataMap["box"] = ""
         for each in arr:
             if len(arr) >= 0:
                 dataArr.append(each["text"])
                 dataBox.append(each["box"])
 
         dataMap["handwritten_content"] = dataArr
-        dataMap["draw_url"] = drawUrl
-        dataMap["box"] = dataBox
 
         # result = check_result
-        serializer.save(data=dataMap, ret=ret, msg=msg,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=dataBox, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
+            'box': dataBox,
+            'draw_url': drawUrl,
             'text': check_result['data'],
             'file_name': self.request.FILES['image'].name
         }
@@ -1651,8 +1657,6 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
             check_result['text'] = "请上传车牌图片"
         else:
             dataMap['plate_no'] = car_num
-            dataMap['box'] = box
-            dataMap['draw_url'] = drawUrl
             check_result['text'] = car_num
 
         # dataMap["plate_no"] = ""
@@ -1668,12 +1672,14 @@ class OcrVehicleplateViewSet(viewsets.ModelViewSet):
         # if (len(arr) == 0 or count < 1 or dataMap["plate_no"] == "其他"):
         #     ret = 1
         #     msg = "请上传车牌图片"
-        serializer.save(data=dataMap, ret=ret, msg=msg,
+        serializer.save(data=dataMap, ret=ret, msg=msg, box=box, draw_url=drawUrl,
                         image=iserializer.image)
 
         # 更新历史记
         result = {
             'content': dataMap,
+            'box': box,
+            'draw_url': drawUrl,
             'text': check_result['text'],
             'file_name': self.request.FILES['image'].name
         }
