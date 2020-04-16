@@ -301,3 +301,9 @@ MASTER_SECRET = u'aef06bda9671310fe0c28b89'
 
 ## 忽略错误统计
 TRACK_IGNORE_STATUS_CODES = [400, 404, 403, 405, 410, 500]
+TRACK_AJAX_REQUESTS = True
+TRACK_PAGEVIEWS = True
+TRACK_IGNORE_URLS = [
+    'admin/',
+    'media/'
+]
