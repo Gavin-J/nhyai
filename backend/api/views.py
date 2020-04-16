@@ -20,8 +20,6 @@ from io import BytesIO
 import json
 from .video import video
 from .ocr.chineseocr import OCR
-from violentsurveillance.image_terrorism import image_terrorism
-from violentsurveillance.vision_porn import vision_porn
 from django.conf import settings
 from .serializers import VideoFileUploadSerializer, OcrGeneralSerializer, OcrIDCardSerializer, AudioFileInspectionSerializer, ImageFileUploadSerializer, WordRecognitionInspectionSerializer, OcrDrivinglicenseSerializer, OcrVehiclelicenseSerializer, OcrBusinesslicenseSerializer, OcrBankcardSerializer, OcrHandWrittenSerializer, OcrVehicleplateSerializer, HistoryRecordSerializer, OcrBusinessCardSerializer
 from .models import VideoFileUpload, AudioFileUpload, OcrGeneral, OcrIDCard, AudioFileInspection, ImageFileUpload, WordRecognitionInspection, OcrDrivinglicense, OcrVehiclelicense, OcrBusinesslicense, OcrBankcard, OcrHandWritten, OcrVehicleplate, HistoryRecord, OcrBusinessCard,HistoryHashRecord
@@ -720,7 +718,6 @@ class FileVisionPornUploadViewSet(viewsets.ModelViewSet):
                 iserializer.image_url), File(img_temp))
 
         file_path = iserializer.image.path
-        # check_result = vision_porn(file_path)
         scores = settings.NSFW.caffe_preprocess_and_compute_api(file_path)
 
         #增加文本识别
