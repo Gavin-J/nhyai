@@ -37,16 +37,16 @@
 
 # 项目截图
 #### 暴恐色情识别
-![暴恐色情识别](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-761b57feb74b.gif)
+![暴恐色情识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-761b57feb74b.gif)
 
 #### 通用识别
-![通用识别](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-71cff4d50b97.gif)
+![通用识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-71cff4d50b97.gif)
 
 #### 敏感文字过滤
-![敏感文字过滤](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-e00e4f5d063d.gif)
+![敏感文字过滤](https://wangshujingscan.github.io/images/imgs/ezgif-6-e00e4f5d063d.gif)
 
 #### 视频检测
-![视频检测](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-50e1986b5bf1.gif)
+![视频检测](https://wangshujingscan.github.io/images/imgs/ezgif-6-50e1986b5bf1.gif)
 
 ### 参考
 - https://github.com/kaldi-asr/kaldi
