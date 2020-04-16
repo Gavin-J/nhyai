@@ -181,7 +181,7 @@
                 recordWord:'开始录音',
                 intervalId:null,
                 record:null,
-                recordSrc:require("../assets/audio/1.mp3"),
+                recordSrc:{},
 				showResult:"",
 				toShort:false
 

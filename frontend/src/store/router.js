@@ -5,7 +5,6 @@ Vue.use(VueRouter);
 
 //实现懒加载
 const sindex=resolve=>require(['../views/sindex'],resolve);
-const imageRecognition=resolve=>require(['../views/image_recognition'],resolve);
 const idCard=resolve=>require(['../views/OCRRecognition/id_card'],resolve);
 const drivingLicence=resolve=>require(['../views/OCRRecognition/driving_licence'],resolve);
 const runningLicence=resolve=>require(['../views/OCRRecognition/running_licence'],resolve);
@@ -32,22 +31,8 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.NODE_ENV === 'production'? '': '',
     linkActiveClass:'active',
-
     routes: [
         {path:'/sindex',meta:{title:'人工智能-南海云AI平台-AI智能审核',keepAlive:true},component:sindex},
-        {path:'/imageRecognition',meta:{title:'ORC识别-南海云AI平台'},component:imageRecognition,
-            children:[
-                {path:'idCard',meta:{title:'OCR识别-南海云AI平台'},component:idCard},
-                {path:'drivingLicence',meta:{title:'OCR识别-南海云AI平台'},component:drivingLicence},
-                {path:'runningLicence',meta:{title:'OCR识别-南海云AI平台'},component:runningLicence},
-                {path:'commonUse',meta:{title:'OCR识别-南海云AI平台'},component:commonUse},
-                {path:'businessLicence',meta:{title:'OCR识别-南海云AI平台'},component:businessLicence},//营业执照
-                {path:'bankCard',meta:{title:'OCR识别-南海云AI平台'},component:bankCard},    //银行卡
-                {path:'handwriten',meta:{title:'OCR识别-南海云AI平台'},component:handwriten},//手写体
-                {path:'carNumber',meta:{title:'OCR识别-南海云AI平台'},component:carNumber},  //车牌
-                {path:'visitingCard',meta:{title:'OCR识别-南海云AI平台'},component:visitingCard},  //名片
-                {path:'/',redirect:'idCard'},
-        ]},
         {path:'/yellow',meta:{title:'色情识别-南海云AI平台'},component:yellow},  //名片
         {path:'/force',meta:{title:'暴恐识别-南海云AI平台'},component:force},  //名片
         {path:'/wordRecognition',meta:{title:'文本检测-南海云AI平台'},component:wordRecognition,

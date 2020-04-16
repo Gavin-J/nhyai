@@ -119,9 +119,9 @@
 	.header_nav_two li a.active{height:46px;border-bottom:none;}
 	.header_link{height:80px;line-height:80px;padding-right:60px;position:relative;}
 	.header_link p a{font-size:14px;color:#3488ea;}
-	.header_link ul{height:36px;overflow:hidden;background:url("../assets/image/load_image_top.jpg") no-repeat 40px 17px;position:absolute;top:37px;right:0;z-index:99;cursor:pointer;border:1px solid transparent;}
+	.header_link ul{height:36px;overflow:hidden;position:absolute;top:37px;right:0;z-index:99;cursor:pointer;border:1px solid transparent;}
 	.header_link ul li{height:36px;line-height:36px;text-align:center;font-size:14px;color:#c8c8c8;padding-right:17px;padding-left:5px; }
-	.header_link ul.active{height:auto;background:#fff url("../assets/image/load_image_top.jpg") no-repeat 40px 17px; border:1px solid #eee;}
+	.header_link ul.active{height:auto; border:1px solid #eee;}
 	.header_link ul.active li{color:#333;}
 	.header_fixed .header_nav li a{color:#fff;}
 	/* .header_fixed .header_nav li a span.header_point{background:url(../assets/images/sindex/header_down_white.png) no-repeat right center;} */

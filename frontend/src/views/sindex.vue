@@ -820,7 +820,6 @@
 </script>
 
 <style scoped>
-	@import "../assets/css/audio.css";
 	.current_width_style{width: 1200px;margin: 0 auto;}
 	.banner_outer{position: relative;vertical-align: middle;text-align: center;}
 	.describe_outer_banner{font-size: 16px;color: white;;display: inline-block;vertical-align: middle;}

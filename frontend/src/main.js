@@ -1,24 +1,15 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import ElementUI from 'element-ui';
+import {TimePicker,Row,Col,Progress,DatePicker,Pagination,Dialog,Upload,Carousel,CarouselItem,Loading} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment'
-
-
-import VueLazyLoad from 'vue-lazyload'
-Vue.use(VueLazyLoad, {
-    preLoad: 1.3,
-    error: require('../src/assets/image/prelook_image.png'),
-    loading: require('../src/assets/image/prelook_image.png'),
-    attempt: 3
-})
 import App from './App'
 import router from './store/router'
 import common from './store/common'
 import fileUtil from './store/fileUtil'
 import axios from 'axios'
-import { post, fetch, patch, put } from './store/https'
+import { post, fetch, patch, put} from './store/https'
 import {showMessageShort} from './store/common'
 import AudioRecorder from 'vue-audio-recorder'
 import "babel-polyfill"
@@ -31,7 +22,17 @@ Vue.prototype.$put = put;
 Vue.prototype.$axios = axios;
 Vue.prototype.$showMessageShort = showMessageShort;
 
-Vue.use(ElementUI);
+Vue.use(Col);
+Vue.use(Row);
+Vue.use(TimePicker);
+Vue.use(Progress);
+Vue.use(DatePicker);
+Vue.use(Pagination);
+Vue.use(Dialog);
+Vue.use(Upload);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
+Vue.use(Loading);
 Vue.use(common);
 Vue.use(fileUtil);
 Vue.use(AudioRecorder);
