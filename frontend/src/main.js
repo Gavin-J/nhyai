@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import {TimePicker,Row,Col,Progress,DatePicker,Pagination,Dialog,Upload,Carousel,CarouselItem,Loading} from 'element-ui';
+import {TimePicker,Row,Col,Progress,DatePicker,Pagination,Dialog,Upload,Carousel,CarouselItem,Loading,Image} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment'
 import App from './App'
@@ -33,6 +33,7 @@ Vue.use(Upload);
 Vue.use(Carousel);
 Vue.use(CarouselItem);
 Vue.use(Loading);
+Vue.use(Image);
 Vue.use(common);
 Vue.use(fileUtil);
 Vue.use(AudioRecorder);
