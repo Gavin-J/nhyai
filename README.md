@@ -46,7 +46,7 @@
 ![敏感文字过滤](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-e00e4f5d063d.gif)
 
 #### 视频检测
-![视频检测](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-1e8ce9a20323.gif)
+![视频检测](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-50e1986b5bf1.gif)
 
 ### 参考
 - https://github.com/kaldi-asr/kaldi
