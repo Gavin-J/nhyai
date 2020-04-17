@@ -35,8 +35,7 @@
 #### 如遇到mysql安装错误，在ubuntu下执行如下命令：
 - sudo apt-get install libmysqlclient-dev
 #### 相关模型
-- [百度网网盘](https://pan.baidu.com/s/1Qd80dzCmPkgF1GcyDblnpQ)
-提取码：8p5o
+- [百度网网盘](https://pan.baidu.com/s/1Qd80dzCmPkgF1GcyDblnpQ) 提取码:8p5o
 
 
 # 项目截图
