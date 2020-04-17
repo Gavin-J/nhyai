@@ -1128,9 +1128,14 @@ class ImageFileUploadViewSet(viewsets.ModelViewSet):
         resultMap['text'] = ocr_result['text']
         resultMap['sensitive_info'] = sensitive_list
         resultMap['web_text'] = sensitive_list['web_text']
-        resultMap['file_name'] = self.request.FILES['image'].name
-
-        serializer.save(data=resultMap, ret=ret,
+        if iserializer.image_url:
+            resultMap['file_name'] = iserializer.image.name.lstrip('photos/')
+            image_url = settings.FILE_URL +  settings.MEDIA_URL + 'photos' + '/' + resultMap['file_name']
+            serializer.save(data=resultMap, ret=ret,image_url=image_url,
+                        msg=msg, image=iserializer.image)
+        else:
+            resultMap['file_name'] = self.request.FILES['image'].name
+            serializer.save(data=resultMap, ret=ret,
                         msg=msg, image=iserializer.image)
 
         # 更新历史记录
