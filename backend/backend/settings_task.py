@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'tracking',
     'api',
     'django_rq',
     'background_task'
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'tracking.middleware.VisitorTrackingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -292,3 +294,12 @@ LOCAL_SERVER = 'http://172.31.4.31:8000'
 # MASTER_SECRET = u'aef06bda9671310fe0c28b89'
 APP_KEY = u'518ac02ef206677bc8e8b0da'
 MASTER_SECRET = u'c5c5baf57bf15052624ae5a7'
+
+## 忽略错误统计
+TRACK_IGNORE_STATUS_CODES = [400, 404, 403, 405, 410, 500]
+TRACK_AJAX_REQUESTS = True
+TRACK_PAGEVIEWS = True
+TRACK_IGNORE_URLS = [
+    'admin/',
+    'media/'
+]
