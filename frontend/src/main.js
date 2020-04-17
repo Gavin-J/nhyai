@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import {TimePicker,Row,Col,Progress,DatePicker,Pagination,Dialog,Upload,Carousel,CarouselItem,Loading,Image} from 'element-ui';
+import {TimePicker,Row,Col,Progress,DatePicker,Pagination,Dialog,Upload,Carousel,CarouselItem,Loading,Image,Message} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment'
 import App from './App'
@@ -13,6 +13,11 @@ import { post, fetch, patch, put} from './store/https'
 import {showMessageShort} from './store/common'
 import AudioRecorder from 'vue-audio-recorder'
 import "babel-polyfill"
+//由于Message组件并没有install 方法供Vue来操作的，是直接返回的，因此按照官方文档单独引入的方法是
+//会报错的，需要给 Message 添加 install 方法
+Message.install = function (Vue, options) {
+    Vue.prototype.$message = Message
+}
 
 //定义全局变量
 Vue.prototype.$post = post;
@@ -34,6 +39,7 @@ Vue.use(Carousel);
 Vue.use(CarouselItem);
 Vue.use(Loading);
 Vue.use(Image);
+Vue.use(Message);
 Vue.use(common);
 Vue.use(fileUtil);
 Vue.use(AudioRecorder);

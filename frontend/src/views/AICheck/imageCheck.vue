@@ -31,22 +31,22 @@
 				<div class="result_outer">
 					<p>暴恐识别</p>
 					<p class="green_style_name" v-if="forceLevel==200">识别中...</p>
-					<p class="red_style_name" v-else-if="forceLevel>90">违规</p>
+					<p class="red_style_name" v-else-if="forceLevel>80">违规</p>
 					<p class="orange_style_name" v-else-if="forceLevel>50">疑似违规</p>
 					<p class="green_style_name" v-else>合规</p>
 					<p class="green_style_number" v-if="forceLevel==200"></p>
-					<p class="red_style_number" v-else-if="forceLevel>90">{{forceLevel}}%</p>
+					<p class="red_style_number" v-else-if="forceLevel>80">{{forceLevel}}%</p>
 					<p class="orange_style_number" v-else-if="forceLevel>50">{{forceLevel}}%</p>
 					<p class="green_style_number" v-else>{{forceLevel}}%</p>
 				</div>
 				<div class="result_outer">
 					<p>色情识别</p>
 					<p class="green_style_name" v-if="sexLevel==200">识别中...</p>
-					<p class="red_style_name" v-else-if="sexLevel>90">违规</p>
+					<p class="red_style_name" v-else-if="sexLevel>80">违规</p>
 					<p class="orange_style_name" v-else-if="sexLevel>50">疑似违规</p>
 					<p class="green_style_name" v-else>合规</p>
 					<p class="green_style_number" v-if="sexLevel==200"></p>
-					<p class="red_style_number" v-else-if="sexLevel>90">{{sexLevel}}%</p>
+					<p class="red_style_number" v-else-if="sexLevel>80">{{sexLevel}}%</p>
 					<p class="orange_style_number" v-else-if="sexLevel>50">{{sexLevel}}%</p>
 					<p class="green_style_number" v-else>{{sexLevel}}%</p>
 				</div>

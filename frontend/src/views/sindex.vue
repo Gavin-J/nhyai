@@ -125,7 +125,8 @@
 						<td class="ell" v-else-if="item.channel_id ==8">详情请预览</td>
 						<td class="ell" v-else>无</td>
 						<td class="ell">{{item.upload_time|momentDate}}</td>
-						<td  @click="preLook(item)">预览</td>
+						<td  @click="preLook(item)" v-if="item.porn_percent>50" class="disAllow">预览</td>
+						<td  @click="preLook(item)" v-else>预览</td>
 					</tr>
 					<tr v-show="!historyInfo.length" class="show_history_center">暂时没有记录哦~</tr>
 
@@ -389,7 +390,7 @@
 	import audioSample from '../components/audioSample.vue'
 	import audioExample from '../components/audio.vue'
     import { Message } from 'element-ui';
-    import {scrollBy,getDate} from '../store/common'
+    import {scrollBy,getDate,showMessageShort} from '../store/common'
     export default {
         data() {
             return {
@@ -540,7 +541,7 @@
 			},
             searchHistory(){
                 if(!this.beginDate&&!this.endDate&&!this.searchContent){
-                    this.$showMessageShort('请选择/输入要查询的条件！');
+                    showMessageShort('请选择/输入要查询的条件！');
                     return;
 				}
                 this.getHistory('',this.beginDate,this.endDate,this.searchContent);
@@ -749,6 +750,11 @@
                 this.preLookInfo={};
 			},
             preLook(item){
+                console.log(item);
+                if(item.porn_percent>50){
+                    this.$showMessageShort('该图片涉黄违规，不能预览！');
+                    return;
+				}
                 this.srcList = [];
                 this.preLookInfo = item;
 				this.getRespectInfo(item.id);
@@ -763,8 +769,6 @@
                         document.getElementById('web_text').innerHTML = this.preLookInfo.web_text;
                     },1000)
 				}
-                console.log(this.preLookInfo);
-				console.log(this.markerInfo);
                 this.centerDialogVisible = true;
 			},
             initVideo(item){
@@ -913,6 +917,7 @@
 	.result_outer .red_style_number{border: 1px solid #ff524a;color: #ff524a}
 	.left_50{margin-left: 50px;}
 	#web_text{max-height: 800px;overflow-y: scroll;}
+	.disAllow{color: #999999!important;cursor:not-allowed!important;}
 
 
 	.show_pagination{text-align: center;margin-top: 30px;}
