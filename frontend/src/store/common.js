@@ -32,8 +32,15 @@ export default {
 //过滤器
 Vue.filter('momentDate', function(time, dateType) {
     // 返回处理后的值
+
     if(time){
         time = time.replace('T'," ");
+        let number = time.indexOf('.');
+        if(number!=-1){
+            time = time.substring(0 ,number);
+            console.log('substring',time);
+        }
+        time = time.replace(/-/g,"/");
     }else {
         return;
     }

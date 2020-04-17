@@ -847,7 +847,7 @@
 	.show_search_con{height: 34px;line-height: 34px;padding-left: 20px;letter-spacing:0;font-size:0px;margin-bottom: 10px;}
 	.show_search_con >span:first-child{color: #000000;font-size: 14px;padding: 10px;}
 	.show_search_con >span:nth-of-type(2){color: #000000;font-size: 14px;padding: 10px;}
-	.search_input{height: 32px;width:315px;line-height: 32px;border: 1px solid #E2ECFC;font-size: 15px;padding-left: 10px;margin-left: 20px;}
+	.search_input{display:inline-block;height: 32px;width:315px;line-height: 32px;border: 1px solid #E2ECFC;font-size: 15px;padding-left: 10px;margin-left: 20px;}
 	.search_input:hover{border: 1px solid #C0C4CC;}
 	.search_input:focus{border: 1px solid #409EFF;}
 	.search_btn{display:inline-block;height: 32px;line-height: 32px;font-size: 14px;background-color: #316DFF;color:white;border: 1px solid #316DFF;width: 80px;text-align: center;cursor: pointer;}
