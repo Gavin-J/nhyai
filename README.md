@@ -30,10 +30,14 @@
 
 ### 运行多任务:
 - screen python backend/manage_task.py rqworker android ios default
-
-##### 如遇到mysql安装错误，在ubuntu下执行如下命令：
+#### 创建用户Django
+- python backend/manage_task.py createsuperuser
+#### 如遇到mysql安装错误，在ubuntu下执行如下命令：
 - sudo apt-get install libmysqlclient-dev
-- 创建用户Django：python backend/manage_task.py createsuperuser
+#### 相关模型
+- [百度网网盘](https://pan.baidu.com/s/1Qd80dzCmPkgF1GcyDblnpQ)
+提取码：8p5o
+
 
 # 项目截图
 #### 暴恐色情识别
