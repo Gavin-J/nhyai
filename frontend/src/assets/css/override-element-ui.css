@@ -8,7 +8,7 @@
     line-height: 32px;
 }
 .el-date-editor.el-input, .el-date-editor.el-input__inner{
-    width: 130px;
+    width: 140px;
 }
 .el-input--suffix .el-input__inner{
     padding-right: 10px;
