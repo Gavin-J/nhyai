@@ -267,9 +267,10 @@ class OCR:
         drawBoxes = []
         draw_filename = file_name.split('.')[0] + '_drawed.' + file_name.split('.')[1]
         drawPath = os.path.join(file_path,draw_filename)
-        drawUrl = settings.FILE_URL +  settings.MEDIA_URL + 'photos' + '/' + draw_filename
+        drawUrl = ''
         # img =  cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         if len(com_res) > 0:
+            drawUrl = settings.FILE_URL +  settings.MEDIA_URL + 'photos' + '/' + draw_filename
             for arr in com_res:
                drawBoxes.append(arr["box"])
             drawImg = draw_boxes(np.array(img),drawBoxes)
