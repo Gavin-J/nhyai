@@ -88,7 +88,7 @@
 			}
 		},
 		methods:{
-            httpImage(formData) {
+            httpImage(formData,type) {
                 let loading = this.$loading({fullscreen:false,target:document.querySelector(".show_result_outer")});
                 $.ajax({
                     url: this.api + "/api/v1/image/get_image_inspection/",
@@ -100,7 +100,9 @@
                     processData: false,
                     success: (response) => {
                         loading.close();
-                      	this.dialogImageUrl = response.image_url;
+                        if(type =='1'){
+                            this.dialogImageUrl = response.image_url;
+						}
                         this.sexLevel = response.data.porn_percent;
                         this.forceLevel = response.data.violence_percent;
                         if (this.sexLevel > 50 | this.forceLevel > 50) {
@@ -132,11 +134,11 @@
                       this.httpImage(formData);
 				  });
 			  }else {
-//                  this.dialogImageUrl= url;
+                  this.dialogImageUrl= url;
                   var formData = new FormData();
                   formData.append('image_url', url);
                   formData.append('system_id', 1);
-                  this.httpImage(formData);
+                  this.httpImage(formData,"1");
 			  }
 			  if(e){
                   e.preventDefault();
