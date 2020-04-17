@@ -30,23 +30,26 @@
 
 ### 运行多任务:
 - screen python backend/manage_task.py rqworker android ios default
-
-##### 如遇到mysql安装错误，在ubuntu下执行如下命令：
+#### 创建用户Django
+- python backend/manage_task.py createsuperuser
+#### 如遇到mysql安装错误，在ubuntu下执行如下命令：
 - sudo apt-get install libmysqlclient-dev
-- 创建用户Django：python backend/manage_task.py createsuperuser
+#### 相关模型
+- [百度网网盘](https://pan.baidu.com/s/1Qd80dzCmPkgF1GcyDblnpQ) 提取码:8p5o
+
 
 # 项目截图
 #### 暴恐色情识别
-![暴恐色情识别](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-761b57feb74b.gif)
+![暴恐色情识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-761b57feb74b.gif)
 
 #### 通用识别
-![通用识别](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-71cff4d50b97.gif)
+![通用识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-71cff4d50b97.gif)
 
 #### 敏感文字过滤
-![敏感文字过滤](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-e00e4f5d063d.gif)
+![敏感文字过滤](https://wangshujingscan.github.io/images/imgs/ezgif-6-e00e4f5d063d.gif)
 
 #### 视频检测
-![视频检测](https://github.com/wangshujingscan/images/blob/master/imgs/ezgif-6-50e1986b5bf1.gif)
+![视频检测](https://wangshujingscan.github.io/images/imgs/ezgif-6-50e1986b5bf1.gif)
 
 ### 参考
 - https://github.com/kaldi-asr/kaldi
