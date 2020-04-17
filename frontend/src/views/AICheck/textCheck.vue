@@ -76,7 +76,6 @@
 		},
 		methods:{
             submitText(e,file,url){
-                console.log(file);
                 document.getElementsByClassName('show_text_word')[0].innerHTML='';
                 this.isUploadText = true;
                 this.isSex = false;
@@ -85,7 +84,6 @@
                 this.isForce = false;
                 this.audioName = file.name;
                 var loading = this.$loading({fullscreen:false,target:document.querySelector(".outer_text")});
-                console.log("文本提交中。。。")
                 var formData = new FormData();
                 formData.append('system_id', 1);
                 formData.append('channel_id', 4);
@@ -104,9 +102,7 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         window.setTimeout(()=>{
-                            console.log(document.getElementsByClassName('show_text_word')[0]);
                             document.getElementsByClassName('show_text_word')[0].innerHTML= response.data.sensitive_info.web_text;
                             loading.close();
                             this.isUploadText = false;

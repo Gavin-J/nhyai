@@ -106,7 +106,6 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         if(response.ret==1){
                             this.showJson.name = response.msg;
                             this.imageWrong = true;

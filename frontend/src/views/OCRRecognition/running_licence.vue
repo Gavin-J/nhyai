@@ -104,7 +104,6 @@
                         loading.close();
                         this.isLoading = false;
 //                        this.uploadInfo(response);
-                        console.log(response.data);
                         this.showJson = response.data;
                         this.dialogImageUrl = response.draw_url;
                     },

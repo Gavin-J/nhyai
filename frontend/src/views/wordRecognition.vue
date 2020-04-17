@@ -173,12 +173,10 @@
         methods: {
             uploadInfo(response){
                 var result = response.result;
-                console.log( result.data.tag_list[1].probability,"hhhhhhhhhhhh") ;
                 var jdata = JSON.stringify(result, null, 4);
                 $("#show_json").html("<pre>"+jdata+"</pre>");//这时数据展示正确
                 var forcePercent = result.data.tag_list[1].probability.toString();
                 forcePercent = forcePercent.substring(0,forcePercent.indexOf(".")+5)*100;
-                console.log(forcePercent);
                 this.showPercent =`概率：${forcePercent}%`;
 
                 if(forcePercent>80){
@@ -221,7 +219,6 @@
             loadDate() {
                 this.isLoading = true;
                 $(".show_sm_image").attr("disabled",true).css("pointer-events","none");
-                console.log(this.clickFirst)
                 if(this.clickFirst===0){
                     this.isLoading = true;
                     this.clickFirst+=1;

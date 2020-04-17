@@ -175,9 +175,7 @@
             resetNumber(){
                 $('#orgAuditDesc').on('keyup',function() {
                     var txtval = $('#orgAuditDesc').val().length;
-//							console.log(txtval);
                     var str = parseInt(600 - txtval);
-//							console.log(str);
                     if (str > 0) {
                         $('#text-count').html('剩余可输入' + str + '字');
                     } else {
@@ -225,7 +223,6 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         this.isCheck = 3;
                         window.setTimeout(()=>{
                             document.getElementById('show_result').innerHTML= response.data.web_text;//msgsnew.join(',')

@@ -291,13 +291,11 @@
 //                this.player = null;
                 this.player = videojs('myVideo');
                 var player = this.player;
-				console.log(this.player);
                 player.markers.reset(marker)
 			},
             initVideo(item){
 //                this.player = null;
                 this.player = videojs('myVideo');
-                console.log(this.player);
                 var player = this.player;
                 player.markers({
                     markerStyle:{  //标记样式
@@ -351,7 +349,6 @@
                 formData.append('video', file);
                 formData.append('system_id', 1);
 //                formData.append('video_url', url);
-                console.log(file,url);
                 this.percentage= 0;
                 var timer = window.setInterval(()=>{
                     this.percentage += 5;
@@ -375,7 +372,6 @@
                         this.markerInfo= [];
                         this.percentage = 100;
                         window.clearInterval(timer);
-						console.log(response);
 //                        this.videoUrl={url:response.data.video} ;
 //						this.video_url= response.data.video_url;
                         this.sexImageUrl = response.data.porn_evidence_information;
@@ -480,14 +476,11 @@
 //                    this.showMessage('请上传小于20M的视频！');
                     return;
 				}
-                console.log(file);
                 const reader = new FileReader();
                 const that = this;
                 reader.readAsDataURL(file);
                 var url = URL.createObjectURL(file);
-                console.log(url);
                 this.videoUrl={url:url};
-                console.log(this.videoUrl);
                 this.isChose=true;
                 this.uploadImage(e,file,url);
                 this.toPractice();

@@ -95,7 +95,6 @@
                         this.isCheck = false;
                         loading.close();
 //                        this.uploadInfo(response);
-                        console.log(response);
                         this.showJson = response.data;
                         this.dialogImageUrl = response.draw_url;
                     },

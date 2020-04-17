@@ -97,7 +97,6 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-						console.log(response);
 
 						var text =''
                         response.data.forEach((res)=>{

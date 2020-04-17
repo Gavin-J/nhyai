@@ -88,7 +88,6 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         this.showJson = response.data.handwritten_content;
 //                        this.plotBox(response.data.box,response.image)
                         this.dialogImageUrl = response.draw_url;
