@@ -537,7 +537,7 @@
 			},
             searchHistory(){
                 if(!this.beginDate&&!this.endDate&&!this.searchContent){
-                    showMessageShort('请选择/输入要查询的条件！');
+                    this.$showMessageShort('请选择/输入要查询的条件！');
                     return;
 				}
                 this.getHistory('',this.beginDate,this.endDate,this.searchContent);
@@ -703,7 +703,10 @@
 			getHistory(pager,start,end,name){
                 let params;
 				if(pager){
-                    params =  'system_id=1'+`&page=${pager}`
+                    start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
+                    end =end?'&end_time='+getDate(end)+' 23:59:59':'';
+                    name =name?'&file_name='+name:'';
+                    params =  'system_id=1'+`&page=${pager}`+start+end+name;
 				}else if(start|end|name!='') {
                     start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
                     end =end?'&end_time='+getDate(end)+' 23:59:59':'';
@@ -733,7 +736,7 @@
                 });
 			},
             handleCurrentChange(val) {
-                this.getHistory(val);
+                this.getHistory(val,this.beginDate,this.endDate,this.searchContent);
             },
             closeDialog(){
                 this.preLookInfo={};
