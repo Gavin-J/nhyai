@@ -40,7 +40,7 @@
 
 # 项目截图
 #### 暴恐色情识别
-![暴恐色情识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-761b57feb74b.gif)
+![暴恐色情识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-b0253e3d2278.gif)
 
 #### 通用识别
 ![通用识别](https://wangshujingscan.github.io/images/imgs/ezgif-6-71cff4d50b97.gif)
