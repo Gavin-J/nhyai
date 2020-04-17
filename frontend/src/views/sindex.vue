@@ -390,7 +390,7 @@
 	import audioSample from '../components/audioSample.vue'
 	import audioExample from '../components/audio.vue'
     import { Message } from 'element-ui';
-    import {scrollBy,getDate,showMessageShort} from '../store/common'
+    import {scrollBy,getDate} from '../store/common'
     export default {
         data() {
             return {
