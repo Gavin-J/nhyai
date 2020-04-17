@@ -101,10 +101,8 @@
 		},
         watch: {
             stopVideo:(newVal,oldVal) => {
-                console.log(newVal);
                 if(newVal){
                     var myVideo = document.getElementById("video");
-                    console.log(myVideo);
                     if(myVideo.currentTime&myVideo.currentTime > 0){
                         myVideo.pause();
 					}
@@ -130,7 +128,6 @@
 				}else {
                     url = videoUrl;
 				}
-                console.log(url);
                 this.videoUrl={url:url} ;
                 this.percentage= 0;
                 var timer = window.setInterval(()=>{
@@ -140,7 +137,6 @@
                     }
                 },2000);
                 var loading = this.$loading({fullscreen:false,target:document.querySelector(".show_video")});
-                console.log("视频提交中。。。")
                 var formData = new FormData();
                 formData.append('system_id', 1);
                 if(file){
@@ -162,13 +158,11 @@
                         this.percentage = 100;
                         window.clearInterval(timer);
                         loading.close();
-                        console.log(response);
                         this.sexInfo= 5;
                         this.forceInfo= 5;
                         this.imageUrl= [];
                         this.markerInfo= [];
 //                        this.uploadInfo(response);
-                        console.log('this.videoUrl',this.videoUrl);
 //                        this.videoUrl={url:response.data.video};
 //						this.video_url= response.data.video_url;
                         this.sexImageUrl = response.data.porn_evidence_information;
@@ -242,9 +236,6 @@
                         }
                         this.isLoading = false;
                         this.$parent.changeUploadState(false);
-                        console.log( this.imageUrl,this.markerTime);
-                        console.log( response);
-                        console.log( this.markerInfo);
                     },
 					error:err=>{
                         loading.close();
@@ -337,7 +328,6 @@
                 $("#btn-confirm").click(function(){
                     var markers = player.markers.getMarkers();
                     var add_time = parseInt( $("#add-time").val() );
-                    console.log(add_time);
                     for (var i = 0; i < markers.length; i++) {
                         markers[i].time += add_time;
                     }

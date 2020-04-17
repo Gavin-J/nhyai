@@ -316,10 +316,8 @@
                 }
 
                 document.getElementsByClassName('show_voice_word')[0].innerHTML='';
-                console.log(file);
 
                 var loading = this.$loading({fullscreen:false,target:document.querySelector(".outer_voice")});
-                console.log("音频提交中。。。")
                 var formData = new FormData();
                 if(file){
                     formData.append('speech', file);
@@ -339,7 +337,6 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         this.isUploading = false;
                         var audio = document.getElementById('audio').load();
                         window.setTimeout(()=>{

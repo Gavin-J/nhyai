@@ -94,7 +94,6 @@
                     processData: false,
                     success:(response)=>{
                         loading.close();
-                        console.log(response);
                         this.isCheck= false;
                         this.showJson  = response.data;
                         this.dialogImageUrl = response.draw_url;

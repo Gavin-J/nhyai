@@ -234,11 +234,9 @@
                 var wav = this.record.getRecord({
                     encodeTo: ENCODE_TYPE.WAV,
                 });
-                console.log(wav);
                 this.recordSrc =URL.createObjectURL(wav) ;
                 let files = new window.File([wav], '1.wav', {type: 'audio/wav'});
 //                this.recordSrc =wav ;
-                console.log(this.recordSrc);
 				this.record.clear();
                 this.recordWord ="正在识别...";
                 this.submitVoice(files);
@@ -266,7 +264,6 @@
                     processData: false,
                     success:(response)=>{
                         loading.close();
-                        console.log(response);
                         if(response.data.text==''){
                             this.showResult =  "没有识别到内容，请重新录音...";
 						}else {

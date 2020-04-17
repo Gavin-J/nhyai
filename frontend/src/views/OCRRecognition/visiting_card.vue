@@ -100,7 +100,6 @@
                     success:(response)=>{
                         loading.close();
                         this.isLoading = false;
-                        console.log(response);
                         this.showJson = response.data;
                         this.dialogImageUrl = response.draw_url;
                     },

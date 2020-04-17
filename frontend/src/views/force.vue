@@ -228,7 +228,6 @@
                 this.$message.error('该功能尚未开通！')
 			},
             onImageChange(file, fileList){
-                console.log(file,"走了这里");
                 fileUtil.getOrientation(file.raw).then((orient) => {
                     if(orient && orient === 6) {
                         const reader = new FileReader();
@@ -238,7 +237,6 @@
                             img.onload = ()=> {
                                 const data = fileUtil.rotateImage(img, img.width, img.height);
                                 const newFile = fileUtil.dataURLtoFile(data, file.raw.name);
-                                console.log(newFile);
                                 file.url= fileUtil.getObjectURL(newFile);
                                 file.raw = newFile;
                                 if(this.fileList.length<this.limit){
@@ -282,10 +280,8 @@
                 }
             },
             outSuggest(files, fileList){
-                console.log(files);
                 let x = 0;
                 let that = this;
-                console.log(x);
                 while(x<files.length&&this.fileList.length<this.limit){
                     let file = files[x];
                     var newFile = {};
@@ -317,11 +313,9 @@
                             img.onload = () => {
                                 const data = fileUtil.rotateImage(img, img.width, img.height);
                                 const newFile = fileUtil.dataURLtoFile(data, file.raw.name);
-                                console.log(newFile);
 
                                 file.url = fileUtil.getObjectURL(newFile);
                                 file.raw = newFile;
-                                console.log(file);
                                 if (this.fileList.length < this.limit) {
 //                                    this.fileList.push(file);
                                     if(file.size>20971520){
@@ -348,7 +342,6 @@
             },
             changeImage(e){
                 var files = e.target.files;
-                console.log(files);
                 let that = this;
                 let j = 0;
                 let enough = that.limit-that.fileList.length;
@@ -374,7 +367,6 @@
                                             newFile.status = "ready";
                                             newFile.url = URL.createObjectURL(rightFile);
                                             newFile.raw = rightFile;
-                                            console.log('newFile',newFile)
                                             this.fileList.push(newFile);
                                             if(that.fileList.length>=10){
                                                 that.hideUpload = true;
@@ -392,7 +384,6 @@
                                     newFile.status = "ready";
                                     newFile.url = URL.createObjectURL(file);
                                     newFile.raw = file;
-                                    console.log('newFile',newFile)
                                     that.fileList.push(newFile);
                                     that.isImage = 2;
                                     if(that.fileList.length>=10){
@@ -404,7 +395,6 @@
                         }
                     }
                     j++;
-                    console.log('这里打印fileList',that.fileList.length>10);
                 }
             },
             submitUpload(e){
@@ -416,7 +406,6 @@
                 this.completeNumber= 0;
                 this.resultList=[];
 //                this.$refs.upload.submit();
-                console.log(this.fileList);
                 var loading = this.$loading({fullscreen:false,target:document.querySelector(".choose_image_list")});
                 this.fileList.forEach(file=>{
                     this.uploadImageTotal(e,file.raw,loading);
@@ -438,14 +427,12 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         this.completeNumber++;
                         this.resultList.push({
                             image:response.image,
                             number:response.data.violence
                         });
                         if(this.completeNumber==this.fileList.length){
-                            console.log("complete",this.fileList.length);
                             loading.close();
                             this.isImage = 3;
                             this.isCheck= false;
@@ -482,7 +469,6 @@
                     processData: false,
                     success:(response)=>{
                         this.resultList=[];
-                        console.log(response);
                         this.resultList.push({
                             image:response.image,
                             number:response.data.violence
@@ -499,9 +485,7 @@
                 this.fileList = [];
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
                 this.fileList = fileList;
-                console.log(this.fileList.length);
                 window.setTimeout(()=>{
                     this.hideUpload = fileList>=this.limit;
                 },500)

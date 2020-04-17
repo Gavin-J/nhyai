@@ -40,7 +40,7 @@
 				<div class="local_upload fl">
 					<!--<p>本地上传</p>-->
 					<input id="datafile" name="datafile" type="file" class="inputfile" @change="changeImage($event)">
-					<label for="datafile" v-if="!isUploading" class="btn_upload">本地上传</label>
+					<label for="datafile" v-if="!isUploading" class="btn_upload" @click="fileUrl =''">本地上传</label>
 					<label v-else class="btn_uploading">本地上传</label>
 				</div>
 			</div>
@@ -471,11 +471,9 @@
 		},
 		mounted:function () {
             this.getHistory();
-            console.log(this.currentDate)
         },
         methods: {
             showInputValue(){
-                console.log(document.getElementById('contentUrl').value);
                 this.$message.error('该功能尚未开通！')
 			},
             changeStart() {
@@ -488,7 +486,6 @@
                         //百度没搜到试了好久才试出来
                         times = this.endDate < time.getTime()||time.getTime() > Date.now();
                         //打印了几百条
-                        // console.log("times时间",times);
                         return times
                     }
                 })
@@ -509,7 +506,6 @@
 					return
 				}
 				let url = this.fileUrl.substring(this.fileUrl.length-5);
-                console.log(url);
                 if(url.indexOf("png") !=-1|url.indexOf("jpg") !=-1|url.indexOf("jpeg") !=-1){
                     this.checkType = 1;
                     this.stopVideo = true;
@@ -569,7 +565,6 @@
                 reader.onload  = (e)=> {
                     that.dialogImageUrl = e.target.result;
                     const fileType = file.type;
-                    console.log(fileType);
                     if(fileType.substr(0, 5) === "image"){
                         if(file.size>20971520){
                             this.$showMessageShort('请选择小于20M的图片！');
@@ -644,15 +639,12 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response,'getRespectInfo');
                         this.videoUrl = response.results.inspection_result;
-                        console.log(this.videoUrl);
                         if(this.preLookInfo.file_type ==2){
                             this.markerInfo = [];
                             this.videoUrl.video_evidence_information.forEach(item=>{
                                 if( parseFloat(item.porn_sensitivity_level)>parseFloat(item.violence_sensitivity_level)){//色情系数比较高
                                     if(parseFloat(item.porn_sensitivity_level)>80){
-                                        console.log(item.porn_sensitivity_level,item.violence_sensitivity_level,item.sensitivity_time);
                                         this.markerInfo.push({
                                             time:item.sensitivity_time-this.videoUrl.interval/2,
                                             text:"违规",
@@ -711,14 +703,12 @@
 			getHistory(pager,start,end,name){
                 let params;
 				if(pager){
-				    console.log(pager+'pager true')
                     params =  'system_id=1'+`&page=${pager}`
 				}else if(start|end|name!='') {
                     start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
                     end =end?'&end_time='+getDate(end)+' 23:59:59':'';
                     name =name?'&file_name='+name:'';
                     params ='system_id=1'+start+end+name;
-                    console.log(params)
 				}else {
                     params =  'system_id=1'
 				}
@@ -733,7 +723,6 @@
                     contentType: false,
                     processData: false,
                     success:(response)=>{
-                        console.log(response);
                         this.count = response.count;
                         this.historyInfo = response.results;
                         this.currentPager = pager?pager:1;
@@ -750,9 +739,8 @@
                 this.preLookInfo={};
 			},
             preLook(item){
-                console.log(item);
                 if(item.porn_percent>50){
-                    this.$showMessageShort('该图片涉黄违规，不能预览！');
+                    this.$showMessageShort('该记录涉黄违规，不能预览！');
                     return;
 				}
                 this.srcList = [];
@@ -772,7 +760,6 @@
                 this.centerDialogVisible = true;
 			},
             initVideo(item){
-                console.log(item);
                 this.player = videojs('Video');
                 var player = this.player;
                 player.markers({

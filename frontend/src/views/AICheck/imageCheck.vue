@@ -101,7 +101,6 @@
                     processData: false,
                     success: (response) => {
                         loading.close();
-                        console.log(response);
 //                      this.dialogImageUrl = response.image;
                         this.sexLevel = response.data.porn_percent;
                         this.forceLevel = response.data.violence_percent;
@@ -120,7 +119,6 @@
                 });
             },
 			submitImage(e, file, url){
-	          console.log('submitImage',file);
 	          this.sexLevel=200;
 	          this.forceLevel=200;
               if(file){

@@ -111,7 +111,6 @@
                     success:(response)=>{
                         loading.close();
                         this.isCheck = false;
-                        console.log(response);
                         if(response.ret==1){
                             this.isNotDrive = true;
                         }else {
