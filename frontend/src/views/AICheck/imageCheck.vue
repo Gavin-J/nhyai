@@ -138,6 +138,7 @@
                   var formData = new FormData();
                   formData.append('image_url', url);
                   formData.append('system_id', 1);
+                  formData.append('channel_id', 1);
                   this.httpImage(formData,"1");
 			  }
 			  if(e){
