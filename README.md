@@ -42,16 +42,16 @@
 
 # 项目截图
 #### 暴恐色情识别
-![](https://img.rruu.net/image/5e9c8dd77e5c7)
+![](https://ae01.alicdn.com/kf/U40e826faae524ca4a2c20416a2ed036aB.jpg)
 
 #### 通用识别
-![](https://img.rruu.net/image/5e9c8d6c49413)
+![](https://ae01.alicdn.com/kf/U92b90f7c589c4ffd8568fb9fb381daa49.jpg)
 
 #### 敏感文字过滤
-![](https://img.rruu.net/image/5e9c8e1060d57)
+![](https://ae01.alicdn.com/kf/U4eaca3a0c93b4b409003ddf73d0d5709Z.jpg)
 
 #### 视频检测
-![](https://img.rruu.net/image/5e9c8cbb69f48)
+![](https://ae01.alicdn.com/kf/Uda6671cabada4ecdac02533b10c9217aQ.jpg)
 
 ### 参考
 - https://github.com/kaldi-asr/kaldi
