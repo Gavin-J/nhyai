@@ -42,13 +42,13 @@
 
 # 项目截图
 #### 暴恐色情识别
-![暴恐色情识别](https://wangshujingscan-1301321227.cos.ap-guangzhou.myqcloud.com/ezgif-6-b0253e3d2278.gif )
+![暴恐色情识别](https://wangshujingscan-1301321227.cos.ap-guangzhou.myqcloud.com/ezgif-6-b0253e3d2278.gif)
 
 #### 通用识别
 ![通用识别](https://wangshujingscan-1301321227.cos.ap-guangzhou.myqcloud.com/ezgif-6-71cff4d50b97.gif)
 
 #### 敏感文字过滤
-![敏感文字过滤](https://wangshujingscan-1301321227.cos.ap-guangzhou.myqcloud.com/ezgif-6-e00e4f5d063d.gif )
+![敏感文字过滤](https://wangshujingscan-1301321227.cos.ap-guangzhou.myqcloud.com/ezgif-6-e00e4f5d063d.gif)
 
 #### 视频检测
 ![视频检测](https://wangshujingscan-1301321227.cos.ap-guangzhou.myqcloud.com/ezgif-6-50e1986b5bf1.gif)
