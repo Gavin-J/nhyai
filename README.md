@@ -55,4 +55,5 @@
 - https://github.com/kaldi-asr/kaldi
 - https://github.com/yahoo/open_nsfw
 - https://github.com/chineseocr/chineseocr
+- https://github.com/chineseocr/darknet-ocr
 - https://github.com/eragonruan/text-detection-ctpn
