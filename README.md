@@ -9,6 +9,11 @@
 - pip install -r requirements.txt
 - tensorflow,tensorflow-gpu version >= 1.13.1
 - pip install torch torchvision
+
+### 启用git lfs功能
+- sudo apt-get install git-lfs
+- git lfs install
+
 ### 前端打包
 - cd /frontend
 - npm run build
