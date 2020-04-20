@@ -18,7 +18,7 @@ class CarPlateIdentity:
         self.car_plate_h = 36
         self.char_w = 20
         self.char_h = 20
-        self.plate_model_path = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/model/plate_recongnize/model.ckpt-510.meta')
+        self.plate_model_path = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/model/plate_recongnize/model.ckpt-520.meta')
         self.char_model_path = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/model/char_recongnize/model.ckpt-580.meta')
         
         # 加载CNN车牌过滤模型

@@ -158,7 +158,7 @@ if __name__ == '__main__':
     data_dir = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/cnn_plate_train')
     test_dir = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/cnn_plate_test')
     train_model_path = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/model/plate_recongnize/model.ckpt')
-    model_path = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/model/plate_recongnize/model.ckpt-510')
+    model_path = os.path.abspath('backend/api/CarPlateIdentity/carIdentityData/model/plate_recongnize/model.ckpt-520')
 
     train_flag = 1
     net = plate_cnn_net()
