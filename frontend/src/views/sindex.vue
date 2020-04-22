@@ -151,14 +151,18 @@
 					<div class="show_video_outer" v-show="preLookInfo.channel_id !==4">
 						<div class="image_con" v-show="fileSort ==1">
 							<el-image v-if="preLookInfo.draw_url"
-								style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
-								:src="preLookInfo.draw_url"
-								:preview-src-list="srcList">
+									  style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
+									  :src="preLookInfo.draw_url"
+									  :preview-src-list="srcList">
+								<div slot="placeholder" class="image-slot"><span class="dot"></span>
+								</div>
 							</el-image>
 							<el-image v-else
-								style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
-								:src="preLookInfo.file_url"
-								:preview-src-list="srcList">
+									  style="max-height: 440px;max-width:99%;object-fit: cover;vertical-align: middle!important;"
+									  :src="preLookInfo.file_url"
+									  :preview-src-list="srcList">
+								<div slot="placeholder" class="image-slot">
+								</div>
 							</el-image>
 							<!--<img :src="preLookInfo.file_url">-->
 							<span></span>
@@ -193,7 +197,7 @@
 							</tr>
 							<tr class="pre_item" v-show="preLookInfo.max_sensitivity_type!='ocr'">
 								<td class="pre_result_item">审查结果</td>
-								<td v-if="preLookInfo.channel_id !=4" class="type_outer">
+								<td v-if="preLookInfo.file_type ==1|preLookInfo.file_type ==2" class="type_outer">
 									<div class="clearfix" v-if="preLookInfo.violence_sensitivity_level !=-1">
 										<div class="result_outer result_outer_notop fl">
 											<p >暴恐识别</p>
@@ -247,20 +251,24 @@
 										</div>
 									</div>
 								</td>
-								<td v-else-if="preLookInfo.file_type ==5">
+								<td v-else-if="preLookInfo.file_type ==3">
 									<div class="clearfix" v-if="videoUrl">
 										<div class="result_outer text_result_outer fl" v-for="item in videoUrl.final_list">
 											<p>{{item}}</p>
 											<p class="red_style_name" >违规</p>
 											<!--<p class="red_style_number">{{item}}</p>-->
 										</div>
+										<p v-if="!videoUrl.final_list">无</p>
 									</div>
 								</td>
 							</tr>
 							<tr class="pre_item">
 								<td class="pre_word_item">文本识别</td>
 								<!--<td v-if="preLookInfo.web_text" id="web_text">{{preLookInfo.web_text}}</td>-->
-								<td v-if="preLookInfo.channel_id==1">{{videoUrl.text|noCheck}}</td>
+								<td v-if="preLookInfo.file_type==1">{{videoUrl.text|noCheck}}</td>
+								<td v-else-if="preLookInfo.file_type==2">{{videoUrl.text|noCheck}}</td>
+								<td v-else-if="preLookInfo.file_type==3">{{audioWord|noCheck}}</td>
+								<td v-else-if="preLookInfo.file_type==4">{{videoUrl.text|noCheck}}</td>
 								<td v-else-if="preLookInfo.channel_id==2">{{videoUrl.text|noCheck}}</td>
 								<td v-else-if="preLookInfo.channel_id==3">{{videoUrl.text|noCheck}}</td>
 								<td v-else-if="preLookInfo.channel_id==4" id="web_text"></td>
@@ -361,7 +369,7 @@
 										<span>证件类型不是银行卡，请上传银行卡照片！</span>
 									</div>
 								</td>
-								<td v-else-if="preLookInfo.channel_id==14">{{videoUrl.text}}</td>
+								<td v-else-if="preLookInfo.file_type==3">{{videoUrl.text}}</td>
 								<td v-else>无文本内容</td>
 							</tr>
 						</table>
@@ -381,56 +389,55 @@
 </template>
 
 <script>
-	import Navigation from "../components/navigation.vue"
-	import FooterIndex from "../components/footerIndex.vue"
-	import ImageCheck from '../views/AICheck/imageCheck.vue'
-	import AudioCheck from '../views/AICheck/AudioCheck.vue'
-	import VideoCheck from '../views/AICheck/videoCheck.vue'
-	import TextCheck from '../views/AICheck/textCheck.vue'
-	import audioSample from '../components/audioSample.vue'
-	import audioExample from '../components/audio.vue'
-    import { Message } from 'element-ui';
+    import Navigation from "../components/navigation.vue"
+    import FooterIndex from "../components/footerIndex.vue"
+    import ImageCheck from '../views/AICheck/imageCheck.vue'
+    import AudioCheck from '../views/AICheck/AudioCheck.vue'
+    import VideoCheck from '../views/AICheck/videoCheck.vue'
+    import TextCheck from '../views/AICheck/textCheck.vue'
+    import audioSample from '../components/audioSample.vue'
+    import audioExample from '../components/audio.vue'
     import {scrollBy,getDate} from '../store/common'
     export default {
         data() {
             return {
                 dialogImageUrl: require("../assets/image/sample_image.png"),
                 dialogVisible: false,
-				jsonDemo:'{"ret":0,"msg":"ok","data":{"tag_list":[{"tag_name":"protest","probability":0.3087675468623638},{"tag_name":"violence","probability":0.017580988407135},{"tag_name":"sign","probability":0.795149803161621},{"tag_name":"photo","probability":0.0147841582074761},{"tag_name":"fire","probability":0.0184208210557699},{"tag_name":"police","probability":0.0153429144993424},{"tag_name":"children","probability":0.00931504089385271},{"tag_name":"group_20","probability":0.683478415012359},{"tag_name":"group_100","probability":0.207240253686904},{"tag_name":"flag","probability":0.122076518833637},{"tag_name":"night","probability":0.212110564112663},{"tag_name":"shouting","probability":0.0291868895292282}]}}',
-				buttonWord:"开始检测",
+                jsonDemo:'{"ret":0,"msg":"ok","data":{"tag_list":[{"tag_name":"protest","probability":0.3087675468623638},{"tag_name":"violence","probability":0.017580988407135},{"tag_name":"sign","probability":0.795149803161621},{"tag_name":"photo","probability":0.0147841582074761},{"tag_name":"fire","probability":0.0184208210557699},{"tag_name":"police","probability":0.0153429144993424},{"tag_name":"children","probability":0.00931504089385271},{"tag_name":"group_20","probability":0.683478415012359},{"tag_name":"group_100","probability":0.207240253686904},{"tag_name":"flag","probability":0.122076518833637},{"tag_name":"night","probability":0.212110564112663},{"tag_name":"shouting","probability":0.0291868895292282}]}}',
+                buttonWord:"开始检测",
                 showPercent:"概率：1.75%",
-				isForce:false,
+                isForce:false,
                 imageRight:false,
                 imageIsBig:false,
-                options:{background:"rgba(0, 0, 0, 0.3)"},
-				beginDate:'',
-				endDate:'',
-				currentPager:1,
+                beginDate:'',
+                endDate:'',
+                currentPager:1,
                 prevText:'上一页',
                 nextText:'下一页',
-				checkType:1,
+                checkType:1,
                 stopVideo:false,
                 stopAudio:false,
                 centerDialogVisible: false,
-				imageFile:'',
-				isUploading:false,
+                imageFile:'',
+                isUploading:false,
                 currentValue:null,
-				fileUrl:'',
-				runningTitle:{license_type:'证件类型',plate_no:'号牌号码',vehicle_type:'车辆类型',owner:'所有人',address:'住址',use_character:'使用性质',model:'品牌型号',vin:'车辆识别代号',engine_no:'发动机号码',register_date:'注册日期',issue_date:'发证日期'},
-				driveTitle:{license_type:'证件类型',card_id:'证号',driver:'姓名',sex:'性别',nationality:'国籍',address:'住址',birthday:'出生日期',issue_date:'初次领证日期',be_class:'准驾车型',valid_start:'有效期限'},
-				businessTitle:{license_type:'证件类型',business_id:'统一社会信用代码',business_name:'名称',business_type:'类型',address:'住所',operator:'法定代表人',registered_capital:'注册资本',register_date:'成立日期',business_term:'营业期限',scope:'经营范围'},
-				bankTitle:{bank_name:'银行信息',bank_cardno:'卡号',expiry_date:'有效期',card_type:'银行卡类型',card_name:'姓名'},
-				cardTitle:{business_name:'姓名',position:'职位',company:'公司',address:'地址',email:'邮箱',phone:'手机',telephone:'电话',qq:'QQ',webchat:'微信'},
+                fileUrl:'',
+                runningTitle:{license_type:'证件类型',plate_no:'号牌号码',vehicle_type:'车辆类型',owner:'所有人',address:'住址',use_character:'使用性质',model:'品牌型号',vin:'车辆识别代号',engine_no:'发动机号码',register_date:'注册日期',issue_date:'发证日期'},
+                driveTitle:{license_type:'证件类型',card_id:'证号',driver:'姓名',sex:'性别',nationality:'国籍',address:'住址',birthday:'出生日期',issue_date:'初次领证日期',be_class:'准驾车型',valid_start:'有效期限'},
+                businessTitle:{license_type:'证件类型',business_id:'统一社会信用代码',business_name:'名称',business_type:'类型',address:'住所',operator:'法定代表人',registered_capital:'注册资本',register_date:'成立日期',business_term:'营业期限',scope:'经营范围'},
+                bankTitle:{bank_name:'银行信息',bank_cardno:'卡号',expiry_date:'有效期',card_type:'银行卡类型',card_name:'姓名'},
+                cardTitle:{business_name:'姓名',position:'职位',company:'公司',address:'地址',email:'邮箱',phone:'手机',telephone:'电话',qq:'QQ',webchat:'微信'},
                 carTitle:{plate_no:'车牌'},
                 count:0,
-				historyInfo:[],
-				preLookInfo:{},
+                historyInfo:[],
+                preLookInfo:{},
                 videoUrl:{},
                 markerInfo:[],
                 player:null,
                 fileSort:2,
-				firstVideo:true,
+                firstVideo:true,
                 srcList:[],
+                audioWord:'',
                 pickerOptions: {
                     disabledDate(time) {
                         return time.getTime() > Date.now();
@@ -448,34 +455,34 @@
                     disabledDate(time) {
                         return time.getTime() > Date.now();
                     }
-				},
+                },
                 searchContent:''
             };
         },
-		components:{
+        components:{
             Navigation,
             FooterIndex,
             ImageCheck,
             AudioCheck,
             VideoCheck,
-			TextCheck,
+            TextCheck,
             audioSample,
             audioExample
 
-		},
-		watch:{
+        },
+        watch:{
 
-		},
+        },
         activated(){
-            this.getHistory(1);
-		},
-		mounted:function () {
+//            this.getHistory(1);
+        },
+        mounted:function () {
             this.getHistory();
         },
         methods: {
             showInputValue(){
                 this.$message.error('该功能尚未开通！')
-			},
+            },
             changeStart() {
                 this.pickerOptionsStart = Object.assign({}, this.pickerOptionsStart, {
                     // 可通过箭头函数的方式访问到this
@@ -503,16 +510,16 @@
             urlCheck(){
                 if(this.fileUrl ==''){
                     this.$message.error('请输入要检测的文件地址')
-					return
-				}
-				let url = this.fileUrl.substring(this.fileUrl.length-5);
+                    return
+                }
+                let url = this.fileUrl.substring(this.fileUrl.length-5);
                 if(url.indexOf("png") !=-1|url.indexOf("jpg") !=-1|url.indexOf("jpeg") !=-1){
                     this.checkType = 1;
                     this.stopVideo = true;
                     this.stopAudio = true;
                     this.submitImageCallback(null,null,this.fileUrl);
                     this.isUploading = true;
-				}else if(url.indexOf("wav") !=-1){
+                }else if(url.indexOf("wav") !=-1){
                     this.checkType = 3;
                     this.stopVideo = true;
                     this.stopAudio = false;
@@ -531,20 +538,20 @@
                     this.stopAudio = true;
                     this.submitTextCallback(null,null,this.fileUrl);
                     this.isUploading = true;
-				}else {
+                }else {
                     this.$showMessageShort('您选择的文件格式错误！');
-				}
-			},
+                }
+            },
             searchHistory(){
                 if(!this.beginDate&&!this.endDate&&!this.searchContent){
                     this.$showMessageShort('请选择/输入要查询的条件！');
                     return;
-				}
+                }
                 this.getHistory('',this.beginDate,this.endDate,this.searchContent);
-			},
-			submitImageCallback(e,file,url){
+            },
+            submitImageCallback(e,file,url){
                 this.$refs.imageCheck.submitImage(e,file,url);
-			},
+            },
             submitAudioCallback(e,file,url){
                 this.$refs.audioCheck.submitAudio(e,file,url);
             },
@@ -555,7 +562,6 @@
                 this.$refs.textCheck.submitText(e,file,url);
             },
             changeImage(e){
-                Message.closeAll();
                 this.imageIsBig = false;
                 this.imageRight = false;
                 const file = e.target.files[0];
@@ -589,12 +595,12 @@
                         that.stopAudio = false;
                         this.submitAudioCallback(e,file);
                         this.isUploading = true;
-					}else if(fileType.substr(0, 5) === "video"){
+                    }else if(fileType.substr(0, 5) === "video"){
 
                         if(fileType.indexOf("mp4") ==-1){
                             this.$showMessageShort('请选择mp4格式的视频！');
                             return;
-						}
+                        }
                         if(file.size>52428800){
                             this.$showMessageShort('请选择小于50M的视频！');
                             return;
@@ -605,7 +611,7 @@
                         this.submitVideoCallback(e,file);
                         this.isUploading = true;
                         this.toPractice();
-					}else if(fileType.substr(0, 4) === "text"){
+                    }else if(fileType.substr(0, 4) === "text"){
                         if(file.size>1048576*10){
                             this.$showMessageShort('请选择小于10M的文件！');
                             return;
@@ -617,14 +623,14 @@
                         this.isUploading = true;
                     }else{
                         this.$showMessageShort('您选择的文件格式错误！');
-					}
+                    }
                     document.getElementById("datafile").value=null;
 
                 };
-			},
-			changeUploadState(isUploading){
+            },
+            changeUploadState(isUploading){
                 this.isUploading = isUploading;
-			},
+            },
             toPractice(){
                 scrollBy(document.getElementById('practice_title').offsetTop-100);
 //                window.scrollBy(0,document.getElementById('practice_title').offsetTop-100)
@@ -640,6 +646,7 @@
                     processData: false,
                     success:(response)=>{
                         this.videoUrl = response.results.inspection_result;
+                        console.log(this.videoUrl);
                         if(this.preLookInfo.file_type ==2){
                             this.markerInfo = [];
                             this.videoUrl.video_evidence_information.forEach(item=>{
@@ -687,34 +694,31 @@
                             }
 
                         }
-                        if(this.preLookInfo.file_type ==4){
-                            document.getElementById('web_text').innerHTML = this.preLookInfo.web_text;
-						}
-                        if(this.preLookInfo.file_type ==5){
-                            document.getElementById('web_text').innerHTML = this.preLookInfo.web_text;
+                        if(this.preLookInfo.file_type ==3){
+                            this.audioWord =this.videoUrl.text.app_text;
                         }
-
                     },
                     error:err=>{
                         console.log(err);
                     }
                 });
             },
-			getHistory(pager,start,end,name){
+            getHistory(pager,start,end,name){
                 let params;
-				if(pager){
+                let channel_id='&channel_id=1';
+                if(pager){
                     start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
                     end =end?'&end_time='+getDate(end)+' 23:59:59':'';
                     name =name?'&file_name='+name:'';
-                    params =  'system_id=1'+`&page=${pager}`+start+end+name;
-				}else if(start|end|name!='') {
+                    params =  'system_id=1'+`&page=${pager}`+start+end+name+channel_id;
+                }else if(start|end|name!='') {
                     start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
                     end =end?'&end_time='+getDate(end)+' 23:59:59':'';
                     name =name?'&file_name='+name:'';
-                    params ='system_id=1'+start+end+name;
-				}else {
+                    params ='system_id=1'+start+end+name+channel_id;
+                }else {
                     params =  'system_id=1'
-				}
+                }
                 var formData = new FormData();
                 formData.append('system_id','pc');
                 formData.append('file_type','99');
@@ -734,34 +738,32 @@
                         console.log(err);
                     }
                 });
-			},
+            },
             handleCurrentChange(val) {
                 this.getHistory(val,this.beginDate,this.endDate,this.searchContent);
             },
             closeDialog(){
                 this.preLookInfo={};
-			},
+            },
             preLook(item){
+                console.log(item);
                 if(item.porn_percent>50){
                     this.$showMessageShort('该记录涉黄违规，不能预览！');
                     return;
-				}
+                }
                 this.srcList = [];
                 this.preLookInfo = item;
-				this.getRespectInfo(item.id);
+                this.getRespectInfo(item.id);
                 this.fileSort =item.file_type;
+                let imgId ;
                 if(item.draw_url){
                     this.srcList.push(item.draw_url);
-				}else {
+                }else {
                     this.srcList.push(item.file_url);
-				}
-                if(this.preLookInfo.file_type ==4){
-                    setTimeout(()=>{
-                        document.getElementById('web_text').innerHTML = this.preLookInfo.web_text;
-                    },1000)
-				}
+                }
+
                 this.centerDialogVisible = true;
-			},
+            },
             initVideo(item){
                 this.player = videojs('Video');
                 var player = this.player;
@@ -908,7 +910,6 @@
 	.left_50{margin-left: 50px;}
 	#web_text{max-height: 800px;overflow-y: scroll;}
 	.disAllow{color: #999999!important;cursor:not-allowed!important;}
-
 
 	.show_pagination{text-align: center;margin-top: 30px;}
 </style>

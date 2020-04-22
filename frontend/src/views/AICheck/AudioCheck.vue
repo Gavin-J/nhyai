@@ -326,7 +326,7 @@
                     formData.append('speech_url', url);
                     formData.append('system_id', 1);
 				}
-                formData.append('channel_id', 14);
+                formData.append('channel_id', 1);
                 $.ajax({
                     url: this.api+"/api/v1/audio/get_chinese_speech_inspection/",
                     type: "post",

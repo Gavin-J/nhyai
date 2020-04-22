@@ -139,6 +139,7 @@
                 var loading = this.$loading({fullscreen:false,target:document.querySelector(".show_video")});
                 var formData = new FormData();
                 formData.append('system_id', 1);
+                formData.append('channel_id',1);
                 if(file){
                     formData.append('video', file);
 				}else {
