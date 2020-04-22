@@ -511,6 +511,10 @@
                 if(this.fileUrl ==''){
                     this.$message.error('请输入要检测的文件地址')
                     return
+				}
+				if(this.fileUrl.length>200){
+                    this.$message.error('文件地址太长，请重新输入!')
+                    return
                 }
                 let url = this.fileUrl.substring(this.fileUrl.length-5);
                 if(url.indexOf("png") !=-1|url.indexOf("jpg") !=-1|url.indexOf("jpeg") !=-1){
@@ -824,7 +828,6 @@
 	.tech-banner-box{display: inline-block;vertical-align: middle;height: 100%;width: 0;}
 	.describe_outer_banner img{width: 40px;height: 40px;margin-right: 40px;}
 	.describe_outer_banner img:nth-of-type(4){margin-right: 0;}
-	.describe_outer_banner p{}
 	.describe_outer_banner p:nth-of-type(1){font-size: 36px;height: 60px;line-height: 60px;margin-bottom: 15px;}
 	.describe_outer_banner p:nth-of-type(2){height: 130px;text-align: center;overflow: hidden;width: 580px;line-height: 30px;}
 
