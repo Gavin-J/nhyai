@@ -111,6 +111,7 @@
                             this.isForce = false;
                         }
                         this.$parent.changeUploadState(false);
+                        this.$parent.completeApply();
                     },
                     error: err => {
                         loading.close();

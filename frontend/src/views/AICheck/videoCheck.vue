@@ -249,6 +249,7 @@
                         this.isLoading = false;
                         this.showMessage('上传失败,重新上传！');
                         this.$parent.changeUploadState(false);
+                        this.$parent.completeApply();
 					}
                 });
                 if(e){

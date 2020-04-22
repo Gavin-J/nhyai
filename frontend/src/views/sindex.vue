@@ -48,7 +48,7 @@
 			<p class="top_suggest current_width_style">支持图片格式：PNG、JPG、JPEG，大小限制<20M。支持视频格式：mp4，大小限制<20M；支持音频格式：wav；支持文本格式：txt，大小限制<10M</p>
 
 			<!--图片评审-->
-			<ImageCheck v-show="checkType ===1" :file="imageFile" ref="imageCheck"></ImageCheck>
+			<ImageCheck v-show="checkType ===1"  :file="imageFile" ref="imageCheck"></ImageCheck>
 
 			<!--视频评审-->
 			<VideoCheck :stopVideo="stopVideo" v-show="checkType ===2" ref="videoCheck"></VideoCheck>
@@ -545,7 +545,10 @@
                 }else {
                     this.$showMessageShort('您选择的文件格式错误！');
                 }
-            },
+			},
+			completeApply(){
+				this.getHistory('',this.beginDate,this.endDate,this.searchContent);
+			},
             searchHistory(){
                 if(!this.beginDate&&!this.endDate&&!this.searchContent){
                     this.$showMessageShort('请选择/输入要查询的条件！');
@@ -709,8 +712,8 @@
             },
             getHistory(pager,start,end,name){
 				let params;
-                // let isPro = process.env=== "prod" ? true : false; //正式环境使用
-                let isPro =false;  //开发使用
+                let isPro = process.env=== "prod" ? true : false; //正式环境使用
+                // let isPro =true;  //开发使用
 				let channel_id=isPro? '&channel_id=1':'';
                 if(pager){
                     start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
@@ -836,7 +839,7 @@
 	.functional_experience .title{text-align: center;color: #333333;margin: 40px 0;font-size: 36px;}
 
 	.top_suggest{color: #999999;font-size: 14px;line-height: 40px;height: 30px;margin-bottom: 25px;}
-	.init_url_style{flex: 1;height: 35px;line-height: 35px;border: 1px solid #E2ECFC;font-size: 15px;padding-left: 10px;background-color: #FAFCFE;width: 685px;}
+	.init_url_style{height: 35px;line-height: 35px;border: 1px solid #E2ECFC;font-size: 15px;padding-left: 10px;background-color: #FAFCFE;width: 685px;float: left;}
 	.init_url_style:hover{border: 1px solid #C0C4CC;}
 	.init_url_style:focus{border: 1px solid #409EFF;}
 	.check_style{display:inline-block;height: 33px;line-height: 33px;font-size: 16px;color: #316DFF;border: 2px solid #316DFF;width: 100px;text-align: center;cursor:pointer;}
@@ -861,7 +864,7 @@
 	.search_btn:hover{background-color: #6087F7;color: white;border: 1px solid #6087F7;}
 
 	.show_history_title{height: 50px;line-height: 50px;color: #333333;font-size: 16px;background-color: #ebeff8;width: 1200px;display: flex;font-weight: 100;border: 1px solid #ebeff8;}
-	.show_history_title th{flex: 0.8;text-align: center;padding-left: 10px;font-weight: 100;}
+	.show_history_title th{flex: 0.8;text-align: center;padding-left: 10px;font-weight: 100;float: left;}
 	.show_history_title th:last-child{flex: 0.5;text-align: center}
 	.show_history_title th:first-child{padding-left: 10px;flex: 3;}
 	.show_history_title th:nth-of-type(3){flex: 2.5;}
@@ -870,7 +873,7 @@
 
 	.show_history_con{height: 50px;line-height: 50px;color: #333333;font-size: 14px;background-color: #fff;width: 1200px;display: flex;border: 1px solid #e3e8f3;border-top: none;}
 	.show_history_center{height: 50px;line-height: 50px;color: #333333;font-size: 14px;background-color: #fff;width: 1200px;border: 1px solid #e3e8f3;border-top: none;text-align: center}
-	.show_history_con td{flex: 0.8;padding-left: 10px;text-align: center;}
+	.show_history_con td{flex: 0.8;padding-left: 10px;text-align: center;float: left;}
 	.show_history_con td:last-child{flex: 0.5;text-align: center;color: #85afff;cursor: pointer;}
 	.show_history_con td:first-child{padding-left: 10px;flex: 3;text-align: left;}
 	.show_history_con td:nth-of-type(3){flex: 2.5;}

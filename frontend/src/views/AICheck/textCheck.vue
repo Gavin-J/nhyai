@@ -136,7 +136,8 @@
                         loading.close();
                         console.log(err);
                         this.$message.error('上传失败,重新上传！');
-                        this.$parent.changeUploadState(false);
+						this.$parent.changeUploadState(false);
+						this.$parent.completeApply();
                         this.isUploadText = false;
                         this.isError = true;
                     }
