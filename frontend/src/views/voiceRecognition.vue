@@ -299,7 +299,6 @@
 	.voice_top_contain{font-size: 0;line-height: 0;}
 	.banner_outer{position: relative;}
 	.describe_outer_banner{position: absolute;top:25%;font-size: 16px;color: white;width: 28%;height: 85%;}
-	.describe_outer_banner p{}
 	.describe_outer_banner p:nth-of-type(1){font-size: 30px;height: 60px;line-height: 60px;margin-bottom: 15px;min-width: 400px;}
 	.describe_outer_banner p:nth-of-type(2){height: 120px;text-align: justify;overflow: hidden;min-width: 550px;line-height: 30px;}
 	.voice_top_contain img{height: 480px;min-width: 1300px;}

@@ -704,8 +704,10 @@
                 });
             },
             getHistory(pager,start,end,name){
-                let params;
-                let channel_id='&channel_id=1';
+				let params;
+                // let isPro = process.env=== "prod" ? true : false; //正式环境使用
+                let isPro =false;  //开发使用
+				let channel_id=isPro? '&channel_id=1':'';
                 if(pager){
                     start =start?'&begin_time='+getDate(start)+' 00:00:01':'';
                     end =end?'&end_time='+getDate(end)+' 23:59:59':'';
